@@ -35,10 +35,13 @@ const Principall = () => {
                     </Text>
                 </Text>
                 <View style={styles.searchSection}>
+                <Text style={[{fontWeight: 'bold', fontSize: 20, marginTop:5, marginLeft: 60}]}>Área do Visitante</Text>
+                </View>
+                {/* <View style={styles.searchSection}>
                     <TextInput style={[styles.input, { color: '#000', marginLeft: 20 }]} autoCorrect={false} placeholder="Buscar" >
                     </TextInput>
                     <FontAwesome style={{ paddingStart: 10, paddingTop: 8 }} name="search" size={26} color="#0426B0" />
-                </View>
+                </View> */}
             </View>
                 <View style={[styles.descriptionContainer, {marginTop: 15}]}>
                     <Text style={[{ marginStart: 8, marginTop: 5 }]} onPress={handleNavigateToPrestadores1}>
@@ -92,7 +95,7 @@ const styles = StyleSheet.create({
     header: {
         flex: 1,
         // height: 50,
-        flexDirection: 'row',
+         flexDirection: 'row',
         justifyContent: "space-between",
         fontSize: 15,
     },
