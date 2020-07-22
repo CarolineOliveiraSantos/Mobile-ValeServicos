@@ -51,7 +51,7 @@ const Detalhes2 = ()=> {
                 <Text style={styles.description}>Cidade:</Text>
                 <Text style={styles.dataValue}>Nova Andradina</Text>
                  </View>
-                 <BaseButton style={styles.button} onPress={sendMail}>
+                 <BaseButton style={[styles.button]} onPress={sendMail}>
                     <Text style={styles.buttonText}>
                         Email
                 </Text>
@@ -94,18 +94,17 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     button: {
-        flex: 1,
+        marginTop: 'auto',
         flexDirection: 'row',
-        justifyContent: "space-between",
+        justifyContent: 'space-between',
         fontSize: 15,
-        marginBottom:130 ,
+        marginBottom:15,
         paddingEnd: 20,
         paddingStart: 20,
     },
     buttonText: {
         width: 130,
         height: 50,
-        marginTop: 15,
         backgroundColor: "#0426B0",
         color: '#FFF',
         fontSize: 16,
