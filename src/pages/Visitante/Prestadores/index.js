@@ -3,7 +3,6 @@ import {View, StyleSheet, Text} from 'react-native';
 import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { Feather as Icon } from '@expo/vector-icons';
-import { block } from 'react-native-reanimated';
 
 const Prestadores1 = () => {
     const navigation = useNavigation();

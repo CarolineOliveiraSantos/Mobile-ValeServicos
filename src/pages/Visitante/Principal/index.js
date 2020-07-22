@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet, TextInput, ScrollView } from 'react-native';
+import { View, Text, StyleSheet, TextInput, ScrollView, TouchableOpacity } from 'react-native';
 import { useNavigation } from "@react-navigation/native";
 import { Feather as Icon } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
@@ -43,45 +43,45 @@ const Principall = () => {
                     <FontAwesome style={{ paddingStart: 10, paddingTop: 8 }} name="search" size={26} color="#0426B0" />
                 </View> */}
             </View>
-                <View style={[styles.descriptionContainer, {marginTop: 15}]}>
-                    <Text style={[{ marginStart: 8, marginTop: 5 }]} onPress={handleNavigateToPrestadores1}>
+                <TouchableOpacity style={[styles.descriptionContainer, {marginTop: 15}]} onPress={handleNavigateToPrestadores1} activeOpacity={0.8}>
+                    <Text style={[{ marginStart: 8, marginTop: 5 }]}>
                         <MaterialCommunityIcons name="broom" size={100} color="black" />
                     </Text>
-                    <View style={styles.text} >
+                    <View style={styles.text}>
                         <Text style={styles.description}>{`Serviços de Limpeza e \n           em Geral`}</Text>
                         <Text style={styles.dataValue}>{`Encontre os profissionais \n       para este trabalho`}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.descriptionContainer}>
-                    <Text style={[{ marginStart: 8, marginBottom: 5 }]} onPress={handleNavigateToPrestadores2}>
+                <TouchableOpacity style={styles.descriptionContainer} onPress={handleNavigateToPrestadores2} activeOpacity={0.8}>
+                    <Text style={[{ marginStart: 8, marginBottom: 5 }]} >
                     <MaterialCommunityIcons name="tree" size={110} color="black" />
                     </Text>
                     <View style={styles.text}>
                         <Text style={styles.description}>{`        Jardinagem`}</Text>
                         <Text style={styles.dataValue}>{`Encontre os profissionais \n       para este trabalho`}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.descriptionContainer}>
-                    <Text style={[{ marginStart: 8, marginBottom: 5}]} onPress={handleNavigateToPrestadores3}>
+                <TouchableOpacity style={styles.descriptionContainer} onPress={handleNavigateToPrestadores3} activeOpacity={0.8}>
+                    <Text style={[{ marginStart: 8, marginBottom: 5}]} >
                     <MaterialCommunityIcons name="home-assistant" size={100} color="black" />
                     </Text>
                     <View style={styles.text}>
                         <Text style={styles.description}>{`Serviços Domésticos \n          Técnicos`}</Text>
                         <Text style={styles.dataValue}>{`Encontre os profissionais \n       para este trabalho`}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
 
-                <View style={styles.descriptionContainer}>
-                    <Text style={[{ marginStart: 8, marginBottom: 70}]} onPress={handleNavigateToPrestadores4}>
+                <TouchableOpacity style={styles.descriptionContainer} onPress={handleNavigateToPrestadores4} activeOpacity={0.8}>
+                    <Text style={[{ marginStart: 8, marginBottom: 70}]} >
                     <FontAwesome5 name="hand-holding" size={100} color="black" />
                     </Text>
                     <View style={styles.text}>
                         <Text style={styles.description}>{` Cuidadores e Babás`}</Text>
                         <Text style={styles.dataValue}>{`Encontre os profissionais \n        para este trabalho`}</Text>
                     </View>
-                </View>
+                </TouchableOpacity>
         </View>
         </ScrollView>
 
