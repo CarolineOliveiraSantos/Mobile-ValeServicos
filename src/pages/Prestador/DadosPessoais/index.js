@@ -39,7 +39,7 @@ const DadosPessoais = () => {
         <>
         <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
             <View style={styles.container}>
-                <Text style={[styles.header, { marginLeft: 20, marginStart: 20, marginTop: 30 }]} onPress={handleNavigateToPrincipal}>
+                <Text style={[styles.header, { marginLeft: 20, marginStart: 20, marginTop: 10 }]} onPress={handleNavigateToPrincipal}>
                     <Text>
                         <Icon name="arrow-left" size={30} color="#0426B0" />
                     </Text>

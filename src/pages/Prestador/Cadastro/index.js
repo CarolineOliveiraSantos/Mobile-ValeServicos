@@ -4,6 +4,8 @@ import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Feather as Icon } from '@expo/vector-icons';
+import api from '../../../services/api';
+// import { Formik } from 'formik';
 
 const Cadastro = () => {
   const navigation = useNavigation();
@@ -14,15 +16,37 @@ const Cadastro = () => {
   function handleNavigateToHome() {
     navigation.navigate("Home");
   }
+  
+    async function handleRegister(){
+      const data = {
+          nome,
+          email,
+          cpf,
+          telefone,
+          city,
+          referencia,
+          sobre,
+          uf, 
+          img
+      };
+  
+      try{
+          const response = await api.post('prestadores', data);
+          navigation.navigate("Login");
+        }catch(err){
+         alert('Erro no cadastro, tente novamente.');
+     }
+  }
 
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [cpf, setCpf] = useState("");
   const [telefone, setTelefone] = useState("");
-  const [cidade, setCidade] = useState("");
-  const [tipodetrabalho, setTipodetrabalho] = useState("");
+  const [city, setCity] = useState("");
+  const [uf, setUf] = useState("");
   const [referencia, setReferencia] = useState("");
   const [sobre, setSobre] = useState("");
+  const [img, setImg] = useState("");
 
   return (
     <View style={styles.container}>
@@ -40,15 +64,18 @@ const Cadastro = () => {
         <Text  style={styles.text}>
           Cadastro do Prestador
         </Text>
-      <TextInput style={styles.input} value={nome} onChangeText={setNome} autoCorrect={false} placeholder="Digite seu nome" />
-      <TextInput style={styles.input} value={email} onChangeText={setEmail}  placeholder="Digite sua e-mail" />
-      <TextInput style={styles.input} value={cpf} keyboardType = "number-pad" onChangeText={setCpf} placeholder="Digite seu CPF" />
-      <TextInput style={styles.input} value={telefone} keyboardType = "number-pad" onChangeText={setTelefone} placeholder="Digite seu telefone" />
-      <TextInput style={styles.input} value={cidade} onChangeText={setCidade} autoCorrect={false} placeholder="Digite sua cidade" />
-      <TextInput style={styles.input} value={tipodetrabalho} onChangeText={setTipodetrabalho} placeholder="Tipo de trabalho" />
-      <TextInput style={styles.input} value={referencia} onChangeText={setReferencia} autoCorrect={false} placeholder="Referência" />
+      <TextInput style={styles.input} value={nome} onChangeText={setNome} autoCorrect={false} placeholder="Nome completo" />
+      <TextInput style={styles.input} value={email} onChangeText={setEmail}  placeholder="E-mail" />
+      <TextInput style={styles.input} value={cpf} keyboardType = "number-pad" maxLength={11} onChangeText={setCpf} placeholder="Digite seu CPF" />
+      <TextInput style={styles.input} value={telefone} keyboardType = "number-pad" onChangeText={setTelefone} placeholder="Whatsapp" />
+      <TextInput style={styles.input} value={city} onChangeText={setCity} autoCorrect={false} placeholder="Digite sua cidade" />
+      <TextInput style={styles.input} value={referencia} onChangeText={setReferencia} autoCorrect={false} placeholder="Referência de trabalhos anteriores" />
       <TextInput style={styles.input} value={sobre} onChangeText={setSobre} placeholder="Fale sobre você"/>
-      <BaseButton style={styles.button} onPress={handleNavigateToLogin}>
+      {/* // como arquivo */}
+
+      
+      <TextInput style={styles.input} value={img} onChangeText={setImg} placeholder="imagem"/>
+      <BaseButton style={styles.button} onPress={handleRegister}>
         <Text style={styles.buttonText}>
           Finalizar cadastro
         </Text>
@@ -58,6 +85,7 @@ const Cadastro = () => {
           Cancelar
         </Text>
       </BaseButton>
+      
         </ScrollView>
     </View>
   );

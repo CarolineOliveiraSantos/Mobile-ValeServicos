@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, TextInput, Alert } from 'react-native';
+import React, { useState } from 'react';
+import { View, StyleSheet, Text, TextInput, Alert, AsyncStorage } from 'react-native';
 import { BaseButton } from "react-native-gesture-handler";
-import { useNavigation, useRoute } from "@react-navigation/native";
+import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Feather as Icon } from '@expo/vector-icons';
 import api from '../../../services/api';
@@ -16,8 +16,23 @@ const Login = () => {
   function handleNavigateToCadastro() {
     navigation.navigate("Cadastro");
   }
-  function handleNavigateToPrincipal() {
-    navigation.navigate("Principal");
+    
+  async function handleLogin(){
+    try{
+        const response = await api.post('sessions', {cpf});
+        if (!response.data.cpf) {
+        return erroLogin();
+                  } else{
+                    AsyncStorage.setItem('cpf', cpf);
+                    AsyncStorage.setItem('nome', response.data.cpf);
+                    console.log(cpf, response.data)
+                    navigation.navigate("Principal");
+                  }
+       
+      }catch(err){
+        alert('Falha no login, teste novamente.')
+    }
+  
   }
 
   const erroLogin = () =>
@@ -47,8 +62,10 @@ const Login = () => {
       <Text style={styles.text}>
         Login do Prestador
         </Text>
-      <TextInput style={styles.input} value={cpf} keyboardType='number-pad' onChangeText={setCpf} autoCorrect={false} placeholder="Digite seu CPF" />
-      <BaseButton style={styles.button} onPress={handleNavigateToPrincipal}>
+      <TextInput style={styles.input} value={cpf} keyboardType='number-pad' 
+      onChangeText={setCpf} maxLength={11}         
+          autoCorrect={false} placeholder="Digite seu CPF" />
+      <BaseButton style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>
           Entrar
         </Text>

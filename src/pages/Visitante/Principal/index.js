@@ -82,6 +82,16 @@ const Principall = () => {
                         <Text style={styles.dataValue}>{`Encontre os profissionais \n        para este trabalho`}</Text>
                     </View>
                 </TouchableOpacity>
+
+                <TouchableOpacity style={styles.descriptionContainer} onPress={handleNavigateToPrestadores4} activeOpacity={0.8}>
+                    <Text style={[{ marginStart: 8, marginBottom: 70}]} >
+                    <FontAwesome5 name="hand-holding" size={100} color="black" />
+                    </Text>
+                    <View style={styles.text}>
+                        <Text style={styles.description}>{`Diversos`}</Text>
+                        <Text style={styles.dataValue}>{`Encontre os profissionais \n        para este trabalho`}</Text>
+                    </View>
+                </TouchableOpacity>
         </View>
         </ScrollView>
 
