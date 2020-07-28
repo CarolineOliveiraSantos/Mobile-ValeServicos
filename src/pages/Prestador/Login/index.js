@@ -1,13 +1,14 @@
-import React, { useState } from 'react';
-import { View, StyleSheet, Text, TextInput, Alert, AsyncStorage } from 'react-native';
+import React, { useState } from "react";
+import { View, StyleSheet, Text, TextInput, Alert, AsyncStorage } from "react-native";
 import { BaseButton } from "react-native-gesture-handler";
 import { useNavigation } from "@react-navigation/native";
-import { FontAwesome5 } from '@expo/vector-icons';
-import { Feather as Icon } from '@expo/vector-icons';
-import api from '../../../services/api';
+import { FontAwesome5 } from "@expo/vector-icons";
+import { Feather as Icon } from "@expo/vector-icons";
+import api from "../../../services/api";
 
 const Login = () => {
-  const [cpf, setCpf] = useState('');
+  const [cpf, setCpf] = useState("");
+
   const navigation = useNavigation();
 
   function handleNavigateToHome() {
@@ -16,40 +17,38 @@ const Login = () => {
   function handleNavigateToCadastro() {
     navigation.navigate("Cadastro");
   }
-    
-  async function handleLogin(){
-    try{
-        const response = await api.post('sessions', {cpf});
-        if (!response.data.cpf) {
+
+  async function handleLogin() {
+    try {
+      const response = await api.post("sessions", {cpf});
+      if (!response.data.cpf) {
         return erroLogin();
-                  } else{
-                    AsyncStorage.setItem('cpf', cpf);
-                    AsyncStorage.setItem('nome', response.data.cpf);
-                    console.log(cpf, response.data)
-                    navigation.navigate("Principal");
-                  }
-       
-      }catch(err){
-        alert('Falha no login, teste novamente.')
-    }
-  
+      } else {
+        AsyncStorage.setItem("cpf", cpf);
+        AsyncStorage.setItem("nome", response.data.nome);
+        console.log(cpf, response.data);
+        navigation.navigate("Principal");
+      }
+    } catch (err) {
+      alert("Falha no login, teste novamente.");
+    }  
   }
+ 
 
   const erroLogin = () =>
-    Alert.alert(
-      "Erro na Autenticação",
-      "Dados incorretos, tente novamente!",
-      [
-        {
-          text: "Ok",
-          onPress: () => console.log(),
-        },
-      ],
-    );
+    Alert.alert("Erro na Autenticação", "Dados incorretos, tente novamente!", [
+      {
+        text: "Ok",
+        onPress: () => console.log(),
+      },
+    ]);
 
   return (
     <View style={[styles.container]}>
-      <Text style={[{ marginLeft: 10, marginStart: 10 }]} onPress={handleNavigateToHome}>
+      <Text
+        style={[{ marginLeft: 10, marginStart: 10 }]}
+        onPress={handleNavigateToHome}
+      >
         <Text>
           <Icon name="arrow-left" size={30} color="#0426B0" />
         </Text>
@@ -59,26 +58,27 @@ const Login = () => {
           <FontAwesome5 name="user-circle" size={70} color="#0426B0" />
         </Text>
       </View>
-      <Text style={styles.text}>
-        Login do Prestador
-        </Text>
-      <TextInput style={styles.input} value={cpf} keyboardType='number-pad' 
-      onChangeText={setCpf} maxLength={11}         
-          autoCorrect={false} placeholder="Digite seu CPF" />
+      <Text style={styles.text}>Login do Prestador</Text>
+      <TextInput
+        style={styles.input}
+        value={cpf}
+        keyboardType="number-pad"
+        onChangeText={setCpf}
+        maxLength={11}
+        autoCorrect={false}
+        placeholder="Digite seu CPF"
+      />
       <BaseButton style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>
-          Entrar
-        </Text>
+        <Text style={styles.buttonText}>Entrar</Text>
       </BaseButton>
-      <View  style={[styles.link]}>
-        <Text style={{ fontSize: 16 }} onPress={handleNavigateToCadastro} >
+      <View style={[styles.link]}>
+        <Text style={{ fontSize: 16 }} onPress={handleNavigateToCadastro}>
           Cadastre-se
         </Text>
       </View>
     </View>
   );
 };
-
 
 const styles = StyleSheet.create({
   container: {
@@ -113,7 +113,7 @@ const styles = StyleSheet.create({
   },
   link: {
     flex: 1,
-    flexDirection: 'row',
+    flexDirection: "row",
     justifyContent: "space-between",
     fontSize: 15,
     marginTop: 7,

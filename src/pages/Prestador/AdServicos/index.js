@@ -22,7 +22,7 @@ const AdServicos = () => {
   return (
     <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
-        <Text style={[styles.header, { marginLeft: 20, marginStart: 10}]} onPress={handleNavigateToListaServicos}>
+        <Text style={[styles.header, { marginLeft: 20, marginStart: 10}]} onPress={handleNavigateToPrincipal}>
             <Text>
             <Icon name="arrow-left" size={30} color="#0426B0" />
             </Text>

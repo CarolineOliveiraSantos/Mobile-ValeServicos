@@ -7,13 +7,14 @@ import { Feather as Icon } from '@expo/vector-icons';
 const Prestadores1 = () => {
     const navigation = useNavigation();
 
+
     function handleNavigateToPrincipall() {
         navigation.navigate('Principall')
     }
     function handleNavigateToDetalhes1() {
         navigation.navigate('Detalhes1')
     }
-    
+
     return (
         <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
             <View style={styles.container}>
@@ -25,6 +26,7 @@ const Prestadores1 = () => {
                 <Text style={[styles.title, {marginStart:25, marginEnd: 25 }]}>Prestadores de Serviços de Limpeza e em Geral</Text>
                 
                 <View style={styles.descriptionContainer}>
+                    
                 <Text style={[styles.description, {marginTop: 10}]}>Nome:</Text>
                 <Text style={[styles.dataValue]}>Angélica da Silva Martins</Text>
                 <Text style={[styles.description]}>Tipo de Trabalho:</Text>
