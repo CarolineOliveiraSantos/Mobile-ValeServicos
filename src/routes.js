@@ -21,10 +21,12 @@ import Prestadores1 from './pages/Visitante/Prestadores/index';
 import Prestadores2 from './pages/Visitante/Prestadores/index2';
 import Prestadores3 from './pages/Visitante/Prestadores/index3';
 import Prestadores4 from './pages/Visitante/Prestadores/index4';
+import Prestadores5 from './pages/Visitante/Prestadores/index5';
 import Detalhes1 from './pages/Visitante/Detalhes/index';
 import Detalhes2 from './pages/Visitante/Detalhes/index2';
 import Detalhes3 from './pages/Visitante/Detalhes/index3';
 import Detalhes4 from './pages/Visitante/Detalhes/index4';
+import Detalhes5 from './pages/Visitante/Detalhes/index5';
 
 
 export default function Routes(){
@@ -50,10 +52,12 @@ export default function Routes(){
         <AppStack.Screen name="Prestadores2" component={Prestadores2}/>
         <AppStack.Screen name="Prestadores3" component={Prestadores3}/>
         <AppStack.Screen name="Prestadores4" component={Prestadores4}/>
+        <AppStack.Screen name="Prestadores5" component={Prestadores5}/>
         <AppStack.Screen name="Detalhes1" component={Detalhes1}/>
         <AppStack.Screen name="Detalhes2" component={Detalhes2}/>
         <AppStack.Screen name="Detalhes3" component={Detalhes3}/>
         <AppStack.Screen name="Detalhes4" component={Detalhes4}/>
+        <AppStack.Screen name="Detalhes5" component={Detalhes5}/>
     </AppStack.Navigator>
 
     </NavigationContainer>

@@ -24,6 +24,9 @@ const Principall = () => {
     function handleNavigateToPrestadores4() {
         navigation.navigate("Prestadores4");
     }
+    function handleNavigateToPrestadores5() {
+        navigation.navigate("Prestadores5");
+    }
 
     return (
         <ScrollView>
@@ -83,12 +86,12 @@ const Principall = () => {
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.descriptionContainer} onPress={handleNavigateToPrestadores4} activeOpacity={0.8}>
+                <TouchableOpacity style={styles.descriptionContainer} onPress={handleNavigateToPrestadores5} activeOpacity={0.8}>
                     <Text style={[{ marginStart: 8, marginBottom: 70}]} >
                     <FontAwesome5 name="hand-holding" size={100} color="black" />
                     </Text>
                     <View style={styles.text}>
-                        <Text style={styles.description}>{`Diversos`}</Text>
+                        <Text style={styles.description}>{`      Outros Serviços`}</Text>
                         <Text style={styles.dataValue}>{`Encontre os profissionais \n        para este trabalho`}</Text>
                     </View>
                 </TouchableOpacity>

@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, Alert, AsyncStorage } from "react-native";
 import { BaseButton, ScrollView } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
 
-const DadosPessoais = () => {
+  const DadosPessoais = () => {
   const navigation = useNavigation();
+  const route = useRoute();
   
+  const prestador = route.params;
+  console.log(prestador)
   function handleNavigateToPrincipal() {
     navigation.goBack();
   }
@@ -19,7 +22,9 @@ const DadosPessoais = () => {
   }
   const [prestadores, setPrestadores] = useState([]);
   
-  const prestadorCpf = AsyncStorage.getItem("cpf")
+  const prestadorCpf = AsyncStorage.getItem("cpf");
+  
+  // const prestadorCpf = prestador.cpf;
   useEffect(() => {
     api.get('profile', {
         headers: {
@@ -27,6 +32,7 @@ const DadosPessoais = () => {
         }
     }).then(response => {
         setPrestadores(response.data);
+        
     })
 }, [prestadorCpf]);
 

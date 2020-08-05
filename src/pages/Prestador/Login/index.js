@@ -11,6 +11,9 @@ const Login = () => {
 
   const navigation = useNavigation();
 
+  function handleNavigateToPrincipal(prestador) {
+    navigation.navigate("Principal" );
+  }
   function handleNavigateToHome() {
     navigation.goBack("Home");
   }
@@ -26,9 +29,11 @@ const Login = () => {
       } else {
         AsyncStorage.setItem("cpf", cpf);
         AsyncStorage.setItem("nome", response.data.nome);
+        AsyncStorage.setItem("prestador", response.data)
         console.log(cpf, response.data);
-        navigation.navigate("Principal");
+        return handleNavigateToPrincipal();
       }
+     
     } catch (err) {
       alert("Falha no login, teste novamente.");
     }  

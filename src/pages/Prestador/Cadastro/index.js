@@ -86,6 +86,7 @@ const Cadastro = () => {
         <TextInput
           style={styles.input}
           value={telefone}
+          maxLength={9}
           keyboardType="number-pad"
           onChangeText={setTelefone}
           placeholder="Whatsapp"
