@@ -25,7 +25,7 @@ const Detalhes5 = ()=> {
     }
 
     function sendWhatsapp(){
-        Linking.openURL(`whatsapp://send?phone=${prestador.telefone}&text=${message}`);
+        Linking.openURL(`whatsapp://send?phone=+55${prestador.telefone}&text=${message}`);
     }
 
     return(

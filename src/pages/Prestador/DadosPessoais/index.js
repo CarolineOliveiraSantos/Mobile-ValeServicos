@@ -36,14 +36,6 @@ import api from "../../../services/api";
     })
 }, [prestadorCpf]);
 
-
-
-  // useEffect(() => {
-  //     api.get('profile').then(response => {
-  //         setPrestadores(response.data);
-  //     })
-  // }, [prestadorId]);
-
   async function handleDeleteAccount(id) {
     try {
       await api.delete(`prestadorApagar/${id}`);

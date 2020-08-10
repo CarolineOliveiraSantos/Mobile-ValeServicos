@@ -15,6 +15,21 @@ import ListaServicos from './pages/Prestador/ListaServicos';
 import AlterarDados from './pages/Prestador/AlterarDados';
 import AlterarServicos from './pages/Prestador/AlterarServicos';
 import VerServicos from './pages/Prestador/VerServicos';
+//CONTRATANTE
+import loginContratante from './pages/Contratante/Login';
+import cadastroContratante from './pages/Contratante/Cadastro';
+import homeContratante from './pages/Contratante/Home';
+import Prestadoress1 from './pages/Contratante/Prestadores/index';
+import Prestadoress2 from './pages/Contratante/Prestadores/index2';
+import Prestadoress3 from './pages/Contratante/Prestadores/index3';
+import Prestadoress4 from './pages/Contratante/Prestadores/index4';
+import Prestadoress5 from './pages/Contratante/Prestadores/index5';
+import Detalhe1 from './pages/Contratante/Detalhe/index';
+import Detalhe2 from './pages/Contratante/Detalhe/index2';
+import Detalhe3 from './pages/Contratante/Detalhe/index3';
+import Detalhe4 from './pages/Contratante/Detalhe/index4';
+import Detalhe5 from './pages/Contratante/Detalhe/index5';
+import Avaliar from './pages/Contratante/Avaliar';
 //VISITANTE
 import Principall from './pages/Visitante/Principal';
 import Prestadores1 from './pages/Visitante/Prestadores/index';
@@ -46,6 +61,21 @@ export default function Routes(){
         <AppStack.Screen name="AlterarDados" component={AlterarDados}/>
         <AppStack.Screen name="AlterarServicos" component={AlterarServicos}/>
         <AppStack.Screen name="VerServicos" component={VerServicos}/>
+        {/* CONTRATANTE */}
+        <AppStack.Screen name="loginContratante" component={loginContratante}/>
+        <AppStack.Screen name="cadastroContratante" component={cadastroContratante}/>
+        <AppStack.Screen name="homeContratante" component={homeContratante}/>
+        <AppStack.Screen name="Prestadoress1" component={Prestadoress1}/>
+        <AppStack.Screen name="Prestadoress2" component={Prestadoress2}/>
+        <AppStack.Screen name="Prestadoress3" component={Prestadoress3}/>
+        <AppStack.Screen name="Prestadoress4" component={Prestadoress4}/>
+        <AppStack.Screen name="Prestadoress5" component={Prestadoress5}/>
+        <AppStack.Screen name="Detalhe1" component={Detalhe1}/>
+        <AppStack.Screen name="Detalhe2" component={Detalhe2}/>
+        <AppStack.Screen name="Detalhe3" component={Detalhe3}/>
+        <AppStack.Screen name="Detalhe4" component={Detalhe4}/>
+        <AppStack.Screen name="Detalhe5" component={Detalhe5}/>
+        <AppStack.Screen name="Avaliar" component={Avaliar}/>
         {/* VISITANTE */}
         <AppStack.Screen name="Principall" component={Principall}/>
         <AppStack.Screen name="Prestadores1" component={Prestadores1}/>

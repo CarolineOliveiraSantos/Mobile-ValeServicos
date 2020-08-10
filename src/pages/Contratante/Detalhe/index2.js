@@ -6,7 +6,7 @@ import { Feather as Icon } from "@expo/vector-icons";
 import { FontAwesome } from "@expo/vector-icons";
 import * as MailComposer from "expo-mail-composer";
 
-const Detalhes2 = () => {
+const Detalhe2 = () => {
   const navigation = useNavigation();
   const route = useRoute();
   const prestador = route.params.prestador;
@@ -130,4 +130,4 @@ const styles = StyleSheet.create({
     paddingTop: 12,
   },
 });
-export default Detalhes2;
+export default Detalhe2;

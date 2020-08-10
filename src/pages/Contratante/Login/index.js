@@ -6,34 +6,34 @@ import { FontAwesome5 } from "@expo/vector-icons";
 import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
 
-const Login = () => {
+const loginContratante = () => {
   const [cpf, setCpf] = useState("");
   // const [senha, setSenha] = useState("");
 
   const navigation = useNavigation();
 
-  function handleNavigateToPrincipal() {
-    navigation.navigate("Principal" );
+  function handleNavigateToHomeContratante() {
+    navigation.navigate("homeContratante" );
   }
   function handleNavigateToHome() {
     navigation.goBack("Home");
   }
-  function handleNavigateToCadastro() {
-    navigation.navigate("Cadastro");
+  function handleNavigateToCadastroContratante() {
+    navigation.navigate("cadastroContratante");
   }
 
   async function handleLogin() {
     try {
-      const response = await api.post("sessions", {cpf});
+      const response = await api.post("sessioncontratante", {cpf});
       if (!response.data.cpf) {
         return erroLogin();
       } else {
         AsyncStorage.setItem("cpf", cpf);
         // AsyncStorage.setItem("senha", senha);
         AsyncStorage.setItem("nome", response.data.nome);
-        AsyncStorage.setItem("prestador", response.data)
+        AsyncStorage.setItem("contratante", response.data)
         console.log(cpf, response.data);
-        return handleNavigateToPrincipal();
+        return handleNavigateToHomeContratante();
       }
     } catch (err) {
       alert("Falha no login, teste novamente.");
@@ -64,7 +64,7 @@ const Login = () => {
           <FontAwesome5 name="user-circle" size={70} color="#0426B0" />
         </Text>
       </View>
-      <Text style={styles.text}>Login do Prestador</Text>
+      <Text style={styles.text}>Login do Contratante</Text>
       <TextInput
         style={styles.input}
         value={cpf}
@@ -86,7 +86,7 @@ const Login = () => {
         <Text style={styles.buttonText}>Entrar</Text>
       </BaseButton>
       <View style={[styles.link]}>
-        <Text style={{ fontSize: 16 }} onPress={handleNavigateToCadastro}>
+        <Text style={{ fontSize: 16 }} onPress={handleNavigateToCadastroContratante}>
           Cadastre-se
         </Text>
       </View>
@@ -140,4 +140,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-export default Login;
+export default loginContratante;

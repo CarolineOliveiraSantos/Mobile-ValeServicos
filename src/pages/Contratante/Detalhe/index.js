@@ -1,18 +1,20 @@
 import React from 'react';
-import {View, StyleSheet, Text, Linking} from 'react-native';
-import { BaseButton } from "react-native-gesture-handler";
+import {View, StyleSheet, Text, Linking, TouchableOpacity} from 'react-native';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons'; 
 import * as MailComposer from 'expo-mail-composer';
 
-const Detalhes3 = ()=> {
+const Detalhe1 = ()=> {
     const navigation = useNavigation();
     const route = useRoute();
     const prestador = route.params.prestador;
 
     function handleNavigateToPrestadores() {
         navigation.goBack()
+    }
+    function handleNavigateToAvaliar() {
+        navigation.navigate("Avaliar")
     }
     const message = `Olá ${prestador.nome}, estou interessado em seus serviços. Vim do Vale Serviços. Podemos conversar?`
 
@@ -38,7 +40,7 @@ const Detalhes3 = ()=> {
 
         <View>
             <Text style={[{ fontWeight: "bold", fontSize: 20, marginTop: 5, marginBottom: 5, textAlign: 'center'}]}>
-        Serviços Técnicos
+        Serviço de Limpeza
             </Text>
         </View>
 
@@ -61,14 +63,20 @@ const Detalhes3 = ()=> {
                 <Text style={styles.description}>Cidade:</Text>
                  <Text style={styles.dataValue}>{prestador.city}/{prestador.uf}</Text>
                  </View>
-                 <BaseButton style={[styles.button]} onPress={sendMail}>
-                    <Text style={styles.buttonText}>
+                 <TouchableOpacity style={styles.buttonn}>
+                 <Text style={[styles.buttonText, {width: 190,backgroundColor: '#006400'}]} onPress={handleNavigateToAvaliar}>
+                        Avalie o serviço
+                </Text>
+                 </TouchableOpacity>
+                 <TouchableOpacity style={[styles.button]}>
+                
+                    <Text style={styles.buttonText} onPress={sendMail}>
                         Email
                 </Text>
                     <Text style={styles.buttonText} onPress={sendWhatsapp}>
                         WhatsApp
                 </Text>
-                </BaseButton>
+                </TouchableOpacity>
         </View>
     );
 }
@@ -103,8 +111,14 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center'
     },
-    button: {
+    buttonn: {
         marginTop: 'auto',
+        flexDirection: 'row',
+        justifyContent: 'center',
+        fontSize: 15,
+    },
+    button: {
+        marginTop: 10,
         flexDirection: 'row',
         justifyContent: 'space-between',
         fontSize: 15,
@@ -113,7 +127,7 @@ const styles = StyleSheet.create({
         paddingStart: 20,
     },
     buttonText: {
-        width: 130,
+        width: 150,
         height: 50,
         backgroundColor: "#0426B0",
         color: '#FFF',
@@ -123,4 +137,4 @@ const styles = StyleSheet.create({
         paddingTop: 12
     }
 })
-export default Detalhes3;
+export default Detalhe1;

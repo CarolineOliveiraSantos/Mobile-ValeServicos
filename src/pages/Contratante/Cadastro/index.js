@@ -5,13 +5,12 @@ import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
-// import { Formik } from 'formik';
 
-const Cadastro = () => {
+const cadastroContratante = () => {
   const navigation = useNavigation();
 
-  function handleNavigateToLogin() {
-    navigation.navigate("Login");
+  function handleNavigateToLoginContratante() {
+    navigation.navigate("loginContratante");
   }
   function handleNavigateToHome() {
     navigation.navigate("Home");
@@ -19,21 +18,18 @@ const Cadastro = () => {
 
   async function handleRegister() {
     const data = {
-      nome,
-      email,
-      cpf,
-      senha,
-      telefone,
-      city,
-      referencia,
-      sobre,
-      uf,
-      img,
+        cpf,
+        nome,
+        email,
+        senha,
+        telefone,
+        city,
+        uf
     };
 
     try {
-      const response = await api.post("prestadores", data);
-      navigation.navigate("Login");
+      const response = await api.post("contratantes", data);
+      navigation.navigate("loginContratante");
     } catch (err) {
       alert("Erro no cadastro, tente novamente.");
     }
@@ -46,14 +42,11 @@ const Cadastro = () => {
   const [telefone, setTelefone] = useState("");
   const [city, setCity] = useState("");
   const [uf, setUf] = useState("");
-  const [referencia, setReferencia] = useState("");
-  const [sobre, setSobre] = useState("");
-  const [img, setImg] = useState("");
 
   return (
     <View style={styles.container}>
       <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
-        <Text onPress={handleNavigateToLogin}>
+        <Text onPress={handleNavigateToLoginContratante}>
           <Text>
             <Icon name="arrow-left" size={30} color="#0426B0" />
           </Text>
@@ -63,7 +56,7 @@ const Cadastro = () => {
             <FontAwesome5 name="user-circle" size={70} color="#0426B0" />
           </Text>
         </View>
-        <Text style={styles.text}>Cadastro do Prestador</Text>
+        <Text style={styles.text}>Cadastro do Contratante</Text>
         <TextInput
           style={styles.input}
           value={nome}
@@ -97,7 +90,7 @@ const Cadastro = () => {
           maxLength={11}
           keyboardType="number-pad"
           onChangeText={setTelefone}
-          placeholder="Whatsapp"
+          placeholder="Ex.:(67)99999-9999"
         />
         <TextInput
           style={styles.input}
@@ -106,27 +99,7 @@ const Cadastro = () => {
           autoCorrect={false}
           placeholder="Digite sua cidade"
         />
-        <TextInput
-          style={styles.input}
-          value={referencia}
-          onChangeText={setReferencia}
-          autoCorrect={false}
-          placeholder="Referência de trabalhos anteriores"
-        />
-        <TextInput
-          style={styles.input}
-          value={sobre}
-          onChangeText={setSobre}
-          placeholder="Fale sobre você"
-        />
-        {/* // como arquivo */}
-
-        <TextInput
-          style={styles.input}
-          value={img}
-          onChangeText={setImg}
-          placeholder="imagem"
-        />
+       
         <BaseButton style={styles.button} onPress={handleRegister}>
           <Text style={styles.buttonText}>Finalizar cadastro</Text>
         </BaseButton>
@@ -176,4 +149,4 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
 });
-export default Cadastro;
+export default cadastroContratante;

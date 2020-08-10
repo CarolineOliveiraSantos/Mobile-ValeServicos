@@ -11,6 +11,9 @@ const Home = ()=> {
   function handleNavigationToLogin(){
     navigation.navigate('Login')
   }
+  function handleNavigationToLoginContratante(){
+    navigation.navigate('loginContratante')
+  }
   function handleNavigationToVisitante(){
     navigation.navigate('Principall')
   }
@@ -21,7 +24,7 @@ const Home = ()=> {
             <Image source={require('../../assets/logo.png')}/>
             <Text style={styles.description}>O lugar ideal para encontrar prestadores de serviços domésticos no Vale do Ivinhema</Text>
         </View>
-        <RectButton style={styles.button} onPress={handleNavigationToVisitante}>
+        <RectButton style={styles.buttonn} onPress={handleNavigationToVisitante}>
               <View style={styles.buttonIcon}>
                   <Text>
                   <MaterialCommunityIcons name="account-badge-horizontal-outline" size={24} color="#FFF"  />
@@ -29,6 +32,16 @@ const Home = ()=> {
               </View>
               <Text style={styles.buttonText}>
                 Visitante
+              </Text>
+          </RectButton>
+          <RectButton style={styles.button} onPress={handleNavigationToLoginContratante}>
+              <View style={styles.buttonIcon}>
+                  <Text>
+                    <Icon name="arrow-right" color="#FFF" size={24}/>
+                  </Text>
+              </View>
+              <Text style={styles.buttonText}>
+                Entrar como Contratante
               </Text>
           </RectButton>
           <RectButton style={styles.button} onPress={handleNavigationToLogin}>
@@ -79,7 +92,15 @@ const styles = StyleSheet.create({
       alignItems: 'center',
       marginTop: 8,
     },
-  
+    buttonn: {
+      backgroundColor: 'rgba(0, 0, 0, 0.8)',
+      height: 60,
+      flexDirection: 'row',
+      borderRadius: 10,
+      overflow: 'hidden',
+      alignItems: 'center',
+      marginTop: 8,
+    },
     buttonIcon: {
       height: 60,
       width: 60,

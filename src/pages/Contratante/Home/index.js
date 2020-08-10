@@ -7,7 +7,7 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { Entypo } from '@expo/vector-icons'; 
 import api from "../../../services/api";
 
-const Principall = () => {
+const homeContratante = () => {
     const navigation = useNavigation();
     const [servicos, setServicos] = useState([]);
 
@@ -15,19 +15,19 @@ const Principall = () => {
         navigation.navigate("Home");
     }
     function handleNavigateToPrestadores1() {
-        navigation.navigate("Prestadores1");
+        navigation.navigate("Prestadoress1");
     }
     function handleNavigateToPrestadores2() {
-        navigation.navigate("Prestadores2");
+        navigation.navigate("Prestadoress2");
     }
     function handleNavigateToPrestadores3() {
-        navigation.navigate("Prestadores3");
+        navigation.navigate("Prestadoress3");
     }
     function handleNavigateToPrestadores4() {
-        navigation.navigate("Prestadores4");
+        navigation.navigate("Prestadoress4");
     }
     function handleNavigateToPrestadores5() {
-        navigation.navigate("Prestadores5");
+        navigation.navigate("Prestadoress5");
     }
 
     api.get(`servicoslist`).then((response) => {
@@ -182,4 +182,4 @@ const styles = StyleSheet.create({
 
     }
 })
-export default Principall;
+export default homeContratante;
