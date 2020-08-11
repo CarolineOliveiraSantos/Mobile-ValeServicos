@@ -1,9 +1,9 @@
 import React from 'react';
-import {Feather as Icon} from '@expo/vector-icons';
+import { Feather as Icon } from '@expo/vector-icons';
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
-import { View, Text, Image, StyleSheet} from 'react-native';
-import {RectButton} from 'react-native-gesture-handler';
-import {useNavigation} from '@react-navigation/native';
+import { View, Text, Image, StyleSheet } from 'react-native';
+import { RectButton } from 'react-native-gesture-handler';
+import { useNavigation } from '@react-navigation/native';
 
 const Home = ()=> {
   const navigation = useNavigation();
@@ -11,11 +11,11 @@ const Home = ()=> {
   function handleNavigationToLogin(){
     navigation.navigate('Login')
   }
+  function handleNavigationToVisitante(){
+    navigation.navigate('Principalll')
+  }
   function handleNavigationToLoginContratante(){
     navigation.navigate('loginContratante')
-  }
-  function handleNavigationToVisitante(){
-    navigation.navigate('Principall')
   }
 
     return(
@@ -24,6 +24,7 @@ const Home = ()=> {
             <Image source={require('../../assets/logo.png')}/>
             <Text style={styles.description}>O lugar ideal para encontrar prestadores de serviços domésticos no Vale do Ivinhema</Text>
         </View>
+         
         <RectButton style={styles.buttonn} onPress={handleNavigationToVisitante}>
               <View style={styles.buttonIcon}>
                   <Text>

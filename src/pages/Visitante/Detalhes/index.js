@@ -38,7 +38,7 @@ const Detalhes = ()=> {
 
         <View>
             <Text style={[{ fontWeight: "bold", fontSize: 20, marginTop: 5, marginBottom: 5, textAlign: 'center'}]}>
-        Serviço de Limpeza
+        Perfil do Prestador
             </Text>
         </View>
 
@@ -61,8 +61,9 @@ const Detalhes = ()=> {
                 <Text style={styles.description}>Cidade:</Text>
                  <Text style={styles.dataValue}>{prestador.city}/{prestador.uf}</Text>
                  </View>
-                 <BaseButton style={[styles.button]} onPress={sendMail}>
-                    <Text style={styles.buttonText}>
+
+                 <BaseButton style={styles.button} onPress={sendMail}>
+                <Text style={styles.buttonText}>
                         Email
                 </Text>
                     <Text style={styles.buttonText} onPress={sendWhatsapp}>

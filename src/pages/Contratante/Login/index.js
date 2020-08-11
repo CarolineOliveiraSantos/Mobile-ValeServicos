@@ -8,7 +8,7 @@ import api from "../../../services/api";
 
 const loginContratante = () => {
   const [cpf, setCpf] = useState("");
-  // const [senha, setSenha] = useState("");
+  const [senha, setSenha] = useState("");
 
   const navigation = useNavigation();
 
@@ -21,26 +21,28 @@ const loginContratante = () => {
   function handleNavigateToCadastroContratante() {
     navigation.navigate("cadastroContratante");
   }
+  function handleNavigateToRecuperarAcesso() {
+    navigation.navigate("RecuperarAcessoo");
+  }
 
   async function handleLogin() {
     try {
-      const response = await api.post("sessioncontratante", {cpf});
+      const response = await api.post("sessioncontratante", {cpf, senha});
       if (!response.data.cpf) {
         return erroLogin();
       } else {
         AsyncStorage.setItem("cpf", cpf);
-        // AsyncStorage.setItem("senha", senha);
+        AsyncStorage.setItem("senha", senha);
         AsyncStorage.setItem("nome", response.data.nome);
         AsyncStorage.setItem("contratante", response.data)
         console.log(cpf, response.data);
         return handleNavigateToHomeContratante();
       }
     } catch (err) {
-      alert("Falha no login, teste novamente.");
+      return(erroLogin());
     }  
   }
  
-
   const erroLogin = () =>
     Alert.alert("Erro na Autenticação", "Dados incorretos, tente novamente!", [
       {
@@ -70,24 +72,26 @@ const loginContratante = () => {
         value={cpf}
         keyboardType="number-pad"
         onChangeText={setCpf}
-        onChange={() => setCpf()}
         maxLength={11}
         autoCorrect={false}
         placeholder="Digite seu CPF"
       />
-      {/* <TextInput
+      <TextInput
         style={styles.input}
         value={senha}
         onChangeText={setSenha}
         autoCorrect={false}
         placeholder="Digite sua senha"
-      /> */}
+      />
       <BaseButton style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </BaseButton>
       <View style={[styles.link]}>
         <Text style={{ fontSize: 16 }} onPress={handleNavigateToCadastroContratante}>
           Cadastre-se
+        </Text>
+        <Text style={{ fontSize: 16 }} onPress={handleNavigateToRecuperarAcesso}>
+          Esqueceu a senha?
         </Text>
       </View>
     </View>

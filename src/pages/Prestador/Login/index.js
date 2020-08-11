@@ -8,12 +8,12 @@ import api from "../../../services/api";
 
 const Login = () => {
   const [cpf, setCpf] = useState("");
-  // const [senha, setSenha] = useState("");
+  const [senha, setSenha] = useState("");
 
   const navigation = useNavigation();
 
   function handleNavigateToPrincipal() {
-    navigation.navigate("Principal" );
+    navigation.navigate("Principal");
   }
   function handleNavigateToHome() {
     navigation.goBack("Home");
@@ -21,22 +21,26 @@ const Login = () => {
   function handleNavigateToCadastro() {
     navigation.navigate("Cadastro");
   }
+  function handleNavigateToRecuperarAcesso() {
+    navigation.navigate("RecuperarAcesso");
+  }
 
   async function handleLogin() {
     try {
-      const response = await api.post("sessions", {cpf});
+      const response = await api.post("sessions", {cpf, senha});
       if (!response.data.cpf) {
         return erroLogin();
       } else {
         AsyncStorage.setItem("cpf", cpf);
-        // AsyncStorage.setItem("senha", senha);
+        AsyncStorage.setItem("senha", senha);
         AsyncStorage.setItem("nome", response.data.nome);
         AsyncStorage.setItem("prestador", response.data)
+        const prestador = response.data
         console.log(cpf, response.data);
-        return handleNavigateToPrincipal();
+        return handleNavigateToPrincipal(prestador);
       }
     } catch (err) {
-      alert("Falha no login, teste novamente.");
+      Alert(erroLogin());
     }  
   }
  
@@ -70,24 +74,26 @@ const Login = () => {
         value={cpf}
         keyboardType="number-pad"
         onChangeText={setCpf}
-        onChange={() => setCpf()}
         maxLength={11}
         autoCorrect={false}
         placeholder="Digite seu CPF"
       />
-      {/* <TextInput
+      <TextInput
         style={styles.input}
         value={senha}
         onChangeText={setSenha}
         autoCorrect={false}
         placeholder="Digite sua senha"
-      /> */}
+      />
       <BaseButton style={styles.button} onPress={handleLogin}>
         <Text style={styles.buttonText}>Entrar</Text>
       </BaseButton>
       <View style={[styles.link]}>
         <Text style={{ fontSize: 16 }} onPress={handleNavigateToCadastro}>
           Cadastre-se
+        </Text>
+        <Text style={{ fontSize: 16 }} onPress={handleNavigateToRecuperarAcesso}>
+          Esqueceu a senha?
         </Text>
       </View>
     </View>

@@ -1,48 +1,32 @@
-import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import React, { useState } from "react";
+import { View, StyleSheet, Text } from "react-native";
+import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
-import { Feather } from "@expo/vector-icons";
 import api from "../../../services/api";
 
-const Prestadoress1 = () => {
+const Prestadoress = () => {
   const navigation = useNavigation();
+
+  function handleNavigateToHome() {
+    navigation.navigate("homeContratante");
+  }
+  function handleNavigateToDetalhes(prestador) {
+    navigation.navigate("Detalhess", { prestador });
+  }
+
   const [prestadores, setPrestadores] = useState([]);
-  const [total, setTotal] = useState(0);
-  const [loading, setLoading] = useState(false);
 
-  async function loadPrestadores() {
-    if (loading) {
-      return;
-    }
-    if (total > 0 && prestadores.length == total) {
-      return;
-    }
-    setLoading(true);
+  const route = useRoute();
 
-    const response = await api.get(`servicosPrestadores/${serv}`);
+  const serv = route.params.servico;
+  console.log(route.params.servico);
 
-    setLoading(false);
-    setPrestadores([...prestadores, ...response.data]);
-    setTotal(response.headers["x-total-count"]);
-  }
-  useEffect(() => {
-    loadPrestadores();
-  }, []);
-
-  function handleNavigateToPrincipall() {
-    navigation.navigate("Principall");
-  }
-  function handleNavigateToDetalhes1(prestador) {
-    navigation.navigate("Detalhe1", {prestador});
-  }
-
-  const serv = 1;
-  api.get(`servicosPrestadores/${serv}`).then((response) => {
+  api.get(`servicosPrestadores/${serv.id}`).then((response) => {
     setPrestadores(response.data);
   });
 
+  
   return (
     <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
       <View style={styles.container}>
@@ -51,17 +35,14 @@ const Prestadoress1 = () => {
             styles.header,
             { marginLeft: 10, marginStart: 10, marginTop: 10 },
           ]}
-          onPress={handleNavigateToPrincipall}
+          onPress={handleNavigateToHome}
         >
           <Text>
             <Icon name="arrow-left" size={30} color="#0426B0" />
           </Text>
         </Text>
         <Text style={[styles.title, { marginStart: 25, marginEnd: 25 }]}>
-          Prestadores de Serviços de Limpeza e em Geral
-        </Text>
-        <Text style={styles.headerText}>
-        Total de <Text style={styles.headerTextText}>{total} prestadores</Text>
+          Prestadores de Serviço
         </Text>
 
         {prestadores.map((prestador) => (
@@ -73,11 +54,28 @@ const Prestadoress1 = () => {
               <Text style={styles.dataValue}>{prestador.sobre}</Text>
               <Text style={[styles.description]}>Telefone:</Text>
               <Text style={styles.dataValue}>{prestador.telefone}</Text>
-
-              <TouchableOpacity style={styles.linkSection} onPress={() => handleNavigateToDetalhes1(prestador)}>
-                <Text style={styles.linkText}>Ver mais</Text>
-                <Feather name="arrow-right" size={30} color="#0426B0" />
-              </TouchableOpacity>
+              <View style={styles.linklink}>
+                <View style={styles.linkSection}>
+                  <Text
+                    style={[
+                      {
+                        fontWeight: "bold",
+                        fontSize: 18,
+                        paddingHorizontal: 10,
+                        color: "#0426B0",
+                      },
+                    ]}
+                    onPress={() => handleNavigateToDetalhes(prestador)}
+                  >
+                    Ver Mais
+                  </Text>
+                </View>
+                <Text>
+                  <Text onPress={() => handleNavigateToDetalhes(prestador)}>
+                    <Icon name="arrow-right" size={30} color="#0426B0" />
+                  </Text>
+                </Text>
+              </View>
             </View>
           </View>
         ))}
@@ -88,15 +86,6 @@ const Prestadoress1 = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-  },
-  headerText: {
-    fontSize: 16,
-    color: '#737380',
-    textAlign: 'right',
-    marginEnd: 15
-  },
-  headerTextText: {
-    fontWeight: "bold",
   },
   linklink: {
     flex: 1,
@@ -112,6 +101,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   descriptionContainer: {
+    // height: 225,
     justifyContent: "space-between",
     marginStart: 10,
     marginEnd: 10,
@@ -136,16 +126,8 @@ const styles = StyleSheet.create({
     color: "black",
   },
   linkSection: {
+    flex: 1,
     flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "center",
-    marginBottom: 15,
-  },
-  linkText: {
-    fontWeight: "bold",
-    fontSize: 18,
-    paddingHorizontal: 10,
-    color: "#0426B0",
   },
 });
-export default Prestadoress1;
+export default Prestadoress;

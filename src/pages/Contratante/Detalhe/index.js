@@ -1,11 +1,11 @@
 import React from 'react';
-import {View, StyleSheet, Text, Linking, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, Text, Linking, TouchableOpacity } from 'react-native';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from '@expo/vector-icons';
-import { FontAwesome } from '@expo/vector-icons'; 
+import { FontAwesome } from '@expo/vector-icons';
 import * as MailComposer from 'expo-mail-composer';
 
-const Detalhe1 = ()=> {
+const Detalhess = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const prestador = route.params.prestador;
@@ -18,7 +18,7 @@ const Detalhe1 = ()=> {
     }
     const message = `Olá ${prestador.nome}, estou interessado em seus serviços. Vim do Vale Serviços. Podemos conversar?`
 
-    function sendMail(){
+    function sendMail() {
         MailComposer.composeAsync({
             subject: `Vale Serviços - Contato`,
             recipients: [prestador.email],
@@ -26,32 +26,32 @@ const Detalhe1 = ()=> {
         })
     }
 
-    function sendWhatsapp(){
+    function sendWhatsapp() {
         Linking.openURL(`whatsapp://send?phone=+55${prestador.telefone}&text=${message}`);
     }
 
-    return(
+    return (
         <View style={styles.container}>
-        <Text style={[styles.header, { marginLeft: 10, marginStart: 10, marginTop: 10 }]} onPress={handleNavigateToPrestadores}>
-            <Text>
-                <Icon name="arrow-left" size={30} color="#0426B0" />
+            <Text style={[styles.header, { marginLeft: 10, marginStart: 10, marginTop: 10 }]} onPress={handleNavigateToPrestadores}>
+                <Text>
+                    <Icon name="arrow-left" size={30} color="#0426B0" />
+                </Text>
             </Text>
-        </Text>
 
-        <View>
-            <Text style={[{ fontWeight: "bold", fontSize: 20, marginTop: 5, marginBottom: 5, textAlign: 'center'}]}>
-        Serviço de Limpeza
+            <View>
+                <Text style={[{ fontWeight: "bold", fontSize: 20, marginTop: 5, marginBottom: 5, textAlign: 'center' }]}>
+                    Serviço de Limpeza
             </Text>
-        </View>
+            </View>
 
-        <View style={styles.icon, {marginBottom:0}}>
+            <View style={styles.icon, { marginBottom: 0 }}>
                 <View style={styles.iconUser}>
                     <Text>
-                    <FontAwesome name="user-circle-o" size={80} color="black" />
+                        <FontAwesome name="user-circle-o" size={80} color="black" />
                     </Text>
                 </View>
-                </View>
-                <View style={styles.descriptionContainer}>
+            </View>
+            <View style={styles.descriptionContainer}>
                 <Text style={styles.description}>Nome:</Text>
                 <Text style={styles.dataValue}>{prestador.nome}</Text>
                 <Text style={styles.description}>Tipo de Trabalho:</Text>
@@ -61,22 +61,23 @@ const Detalhe1 = ()=> {
                 <Text style={styles.description}>Referência:</Text>
                 <Text style={styles.dataValue}>{prestador.referencia}</Text>
                 <Text style={styles.description}>Cidade:</Text>
-                 <Text style={styles.dataValue}>{prestador.city}/{prestador.uf}</Text>
-                 </View>
-                 <TouchableOpacity style={styles.buttonn}>
-                 <Text style={[styles.buttonText, {width: 190,backgroundColor: '#006400'}]} onPress={handleNavigateToAvaliar}>
-                        Avalie o serviço
+                <Text style={styles.dataValue}>{prestador.city}/{prestador.uf}</Text>
+            </View>
+
+            <TouchableOpacity style={styles.buttonn}>
+                <Text style={[styles.buttonText, { backgroundColor: '#191970' }]} onPress={handleNavigateToAvaliar}>
+                    Avalie o serviço
                 </Text>
-                 </TouchableOpacity>
-                 <TouchableOpacity style={[styles.button]}>
-                
-                    <Text style={styles.buttonText} onPress={sendMail}>
-                        Email
+            </TouchableOpacity>
+
+            <TouchableOpacity style={styles.button}>
+                <Text style={styles.buttonText} onPress={sendMail}>
+                    Email
                 </Text>
-                    <Text style={styles.buttonText} onPress={sendWhatsapp}>
-                        WhatsApp
+                <Text style={styles.buttonText} onPress={sendWhatsapp}>
+                    WhatsApp
                 </Text>
-                </TouchableOpacity>
+            </TouchableOpacity>
         </View>
     );
 }
@@ -106,7 +107,7 @@ const styles = StyleSheet.create({
         marginBottom: 8,
         paddingHorizontal: 15,
         color: 'black',
-    }, 
+    },
     iconUser: {
         justifyContent: 'center',
         alignItems: 'center'
@@ -122,7 +123,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         fontSize: 15,
-        marginBottom:15,
+        marginBottom: 15,
         paddingEnd: 20,
         paddingStart: 20,
     },
@@ -137,4 +138,4 @@ const styles = StyleSheet.create({
         paddingTop: 12
     }
 })
-export default Detalhe1;
+export default Detalhess;

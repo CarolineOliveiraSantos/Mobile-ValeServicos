@@ -1,13 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
+import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
 import api from "../../../services/api";
 
-const Prestadores1 = () => {
+const Prestadores = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+
+  function handleNavigateToPrincipall() {
+    navigation.navigate("Principalll");
+  }
+  function handleNavigateToDetalhes(prestador) {
+    navigation.navigate("Detalhes", { prestador });
+  }
+
   const [prestadores, setPrestadores] = useState([]);
   const [total, setTotal] = useState(0);
   const [loading, setLoading] = useState(false);
@@ -21,28 +30,23 @@ const Prestadores1 = () => {
     }
     setLoading(true);
 
-    const response = await api.get(`servicosPrestadores/${serv}`);
+    const response = await api.get(`servicosPrestadores/${serv.id}`);
 
-    setLoading(false);
-    setPrestadores([...prestadores, ...response.data]);
     setTotal(response.headers["x-total-count"]);
   }
   useEffect(() => {
     loadPrestadores();
   }, []);
 
-  function handleNavigateToPrincipall() {
-    navigation.navigate("Principall");
-  }
-  function handleNavigateToDetalhes1(prestador) {
-    navigation.navigate("Detalhes1", {prestador});
-  }
 
-  const serv = 1;
-  api.get(`servicosPrestadores/${serv}`).then((response) => {
+  const serv = route.params.servico;
+  console.log(route.params.servico);
+
+  api.get(`servicosPrestadores/${serv.id}`).then((response) => {
     setPrestadores(response.data);
   });
 
+  
   return (
     <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
       <View style={styles.container}>
@@ -58,8 +62,9 @@ const Prestadores1 = () => {
           </Text>
         </Text>
         <Text style={[styles.title, { marginStart: 25, marginEnd: 25 }]}>
-          Prestadores de Serviços de Limpeza e em Geral
+          Prestadores de Serviço
         </Text>
+
         <Text style={styles.headerText}>
         Total de <Text style={styles.headerTextText}>{total} prestadores</Text>
         </Text>
@@ -74,10 +79,11 @@ const Prestadores1 = () => {
               <Text style={[styles.description]}>Telefone:</Text>
               <Text style={styles.dataValue}>{prestador.telefone}</Text>
 
-              <TouchableOpacity style={styles.linkSection} onPress={() => handleNavigateToDetalhes1(prestador)}>
+              <TouchableOpacity style={styles.linkSection} onPress={() => handleNavigateToDetalhes(prestador)}>
                 <Text style={styles.linkText}>Ver mais</Text>
                 <Feather name="arrow-right" size={30} color="#0426B0" />
               </TouchableOpacity>
+
             </View>
           </View>
         ))}
@@ -112,6 +118,7 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   descriptionContainer: {
+    // height: 225,
     justifyContent: "space-between",
     marginStart: 10,
     marginEnd: 10,
@@ -148,4 +155,4 @@ const styles = StyleSheet.create({
     color: "#0426B0",
   },
 });
-export default Prestadores1;
+export default Prestadores;

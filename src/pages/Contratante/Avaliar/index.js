@@ -34,7 +34,7 @@ const Avaliar = () => {
                 </View>
                 <TextInput style={styles.input} value={valor} maxLength={1} keyboardType = "number-pad" onChangeText={setValor} placeholder="Faça a sua avaliação" />
                 <TextInput style={[styles.input, {height: 80}]} value={comentario}  onChangeText={setComentario} placeholder="Comentário" />
-                <View style={{ paddingStart: 20, paddingEnd: 20, paddingBottom: 160}}>
+                <View style={{ paddingStart: 20, paddingEnd: 20 }}>
                 <RectButton style={styles.button}>
               <View style={styles.buttonIcon}>
                   <Text>
@@ -55,12 +55,10 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     emoji: {
-        flex: 1,
-        height: 50,
+        marginBottom: 15,
         flexDirection: 'row',
         justifyContent: "space-between",
         fontSize: 15,
-        marginBottom: 15,
         paddingEnd: 70,
         paddingStart: 70,
     },
@@ -92,11 +90,9 @@ const styles = StyleSheet.create({
         height: 60,
         flexDirection: 'row',
         borderRadius: 10,
-        overflow: 'hidden',
         alignItems: 'center',
         marginTop: 8,
       },
-    
       buttonIcon: {
         height: 60,
         width: 60,
