@@ -153,6 +153,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingHorizontal: 10,
     color: "#0426B0",
-  },
+  }
 });
 export default Prestadores;

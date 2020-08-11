@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, TextInput } from 'react-native';
 import { BaseButton, ScrollView } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Feather as Icon } from '@expo/vector-icons';
 
 
 const AlterarDados = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+
+    const [prestadores, setPrestadores] = useState([route.params.prestador]);
+    console.log(route.params.prestador)
 
     function handleNavigateToPrincipal() {
         navigation.navigate("Principal");
@@ -24,6 +28,33 @@ const AlterarDados = () => {
     const [tipodetrabalho, setTipodetrabalho] = useState("");
     const [referencia, setReferencia] = useState("");
     const [sobre, setSobre] = useState("");
+
+    const prestadorCpf = prestadores.cpf;
+
+    async function handleAlterar() {
+          const data = { 
+              nome,
+              email,
+              telefone,
+              city,
+              tipodetrabalho,
+              referencia,
+              sobre
+         };
+          try {
+            const response = await api.put(`editarprestador/${prestadorCpf}`, data);
+            navigation.navigate("DadosPessoais");
+          } catch (err) {
+            alert("Erro ao alterar dados, tente novamente.");
+          }
+      }
+      const erroRecuperar = () =>
+        Alert.alert("Erro ao Alterar Dados", "Tente novamente!", [
+          {
+            text: "Ok",
+            onPress: () => console.log(),
+          },
+        ]);
 
     return (
         <View style={styles.container}>
@@ -49,7 +80,7 @@ const AlterarDados = () => {
                 <TextInput style={styles.input} value={tipodetrabalho} onChangeText={setTipodetrabalho} placeholder="Tipo de trabalho" />
                 <TextInput style={styles.input} value={referencia} onChangeText={setReferencia} autoCorrect={false} placeholder="Referência" />
                 <TextInput style={styles.input} value={sobre} onChangeText={setSobre} placeholder="Fale sobre você" />
-                <BaseButton style={styles.button} onPress={handleNavigateToDadosPessoais}>
+                <BaseButton style={styles.button} onPress={handleAlterar}>
                     <Text style={styles.buttonText}>
                         Alterar
         </Text>

@@ -4,44 +4,48 @@ import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
+import Prestadores from "../../Visitante/Prestadores";
 
   const DadosPessoais = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  
-  const prestador = route.params;
-  console.log(prestador)
+
+  const [prestadores, setPrestadores] = useState([route.params.prestador]);
+  console.log(route.params.prestador)
+
   function handleNavigateToPrincipal() {
     navigation.goBack();
   }
   function handleNavigateToHome() {
     navigation.navigate("Home");
   }
-  function handleNavigateToAlterarDados() {
-    navigation.navigate("AlterarDados");
+  function handleNavigateToAlterarDados(prestador) {
+    navigation.navigate("AlterarDados", {prestador});
   }
-  const [prestadores, setPrestadores] = useState([]);
+  // const [prestadores, setPrestadores] = useState([]);
   
   const prestadorCpf = AsyncStorage.getItem("cpf");
   
   // const prestadorCpf = prestador.cpf;
-  useEffect(() => {
-    api.get('profile', {
-        headers: {
-          Authorization: prestadorCpf,
-        }
-    }).then(response => {
-        setPrestadores(response.data);
+//   useEffect(() => {
+//     api.get('profile', {
+//         headers: {
+//           Authorization: prestadorCpf,
+//         }
+//     }).then(response => {
+//         setPrestadores(response.data);
         
-    })
-}, [prestadorCpf]);
+//     })
+// }, [prestadorCpf]);
 
-  async function handleDeleteAccount(id) {
+const id = route.params.prestador.id
+  async function handleDeleteAccount() {
     try {
       await api.delete(`prestadorApagar/${id}`);
       setPrestadores(prestadores.filter((prestador) => prestador.id !== id));
+      return navigation.navigate("Home")
     } catch (err) {
-      alert("Erro ao deletar caso, tente novamente.");
+      alert("Erro ao deletar prestador, tente novamente.");
     }
   }
 
@@ -56,7 +60,7 @@ import api from "../../../services/api";
         },
         {
           text: "Excluir",
-          onPress: () => console.log({ handleDeleteAccount }),
+          onPress: () => {return handleDeleteAccount()},
         },
       ],
       { cancelable: false }
@@ -79,7 +83,6 @@ import api from "../../../services/api";
           </Text>
 
           <Text style={styles.title}>Dados Pessoais</Text>
-          {/* <Text>{prestadores.map}</Text> */}
 
           {prestadores.map((prestador) => (
             <View keyExtractor={prestador => String(prestador.id) }>
@@ -108,12 +111,12 @@ import api from "../../../services/api";
             </View>
           ))}
           <BaseButton style={styles.button}>
-            <Text style={styles.buttonText} onPress={createAlert}>
+            <Text style={styles.buttonText} onPress={() => createAlert()}>
               Excluir conta
             </Text>
             <Text
               style={styles.buttonText}
-              onPress={handleNavigateToAlterarDados}
+              onPress={() => handleNavigateToAlterarDados(prestador)}
             >
               Editar
             </Text>

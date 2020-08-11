@@ -12,8 +12,8 @@ const Login = () => {
 
   const navigation = useNavigation();
 
-  function handleNavigateToPrincipal() {
-    navigation.navigate("Principal");
+  function handleNavigateToPrincipal(prestador) {
+    navigation.navigate("Principal", {prestador});
   }
   function handleNavigateToHome() {
     navigation.goBack("Home");

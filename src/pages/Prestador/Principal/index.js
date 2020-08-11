@@ -1,16 +1,20 @@
 import React from 'react';
 import { View, StyleSheet, Text, Image, Alert } from 'react-native';
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { MaterialCommunityIcons } from '@expo/vector-icons'; 
 import { FontAwesome5 } from '@expo/vector-icons'; 
 import { Entypo } from '@expo/vector-icons'; 
 import { Feather } from '@expo/vector-icons'; 
 
 const Principal = () => {
-    const navigation = useNavigation();
-  
-    function handleNavigateToDadosPessoais() {
-      navigation.navigate("DadosPessoais");
+    const navigation = useNavigation(); 
+    const route = useRoute();
+    const prestador = route.params.prestador;
+    console.log(route.params.prestador)
+
+
+    function handleNavigateToDadosPessoais(prestador) {
+      navigation.navigate("DadosPessoais", {prestador});
     }
     function handleNavigateToServicos() {
         navigation.navigate("ListaServicos");
@@ -44,7 +48,7 @@ const Principal = () => {
                 <Image source={require('../../../assets/background.png')}/>
             </View>
             <View style={styles.menu}>
-                <Text style= {styles.menuIcon} onPress={handleNavigateToDadosPessoais}>
+                <Text style= {styles.menuIcon} onPress={() => handleNavigateToDadosPessoais(prestador)}>
                     <MaterialCommunityIcons name="account-badge-horizontal-outline" size={32} color="white" />                  
                 </Text>
                 <Text style= {styles.menuIcon} onPress={handleNavigateToServicos}>
