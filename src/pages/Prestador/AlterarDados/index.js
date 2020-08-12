@@ -1,16 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { View, StyleSheet, Text, TextInput } from 'react-native';
+import { View, StyleSheet, Text, TextInput, Alert } from 'react-native';
 import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { FontAwesome5 } from '@expo/vector-icons';
 import { Feather as Icon } from '@expo/vector-icons';
-
+import api from "../../../services/api";
 
 const AlterarDados = () => {
     const navigation = useNavigation();
     const route = useRoute();
 
-    const [prestadores, setPrestadores] = useState([route.params.prestador]);
+    const prestador = route.params.prestador;
     console.log(route.params.prestador)
 
     function handleNavigateToPrincipal() {
@@ -20,46 +20,47 @@ const AlterarDados = () => {
         navigation.navigate("DadosPessoais");
     }
 
-    const [nome, setNome] = useState("");
-    const [email, setEmail] = useState("");
-    const [cpf, setCpf] = useState("");
-    const [telefone, setTelefone] = useState("");
-    const [cidade, setCidade] = useState("");
-    const [tipodetrabalho, setTipodetrabalho] = useState("");
-    const [referencia, setReferencia] = useState("");
-    const [sobre, setSobre] = useState("");
+    const [nome, setNome] = useState(prestador.nome);
+    const [email, setEmail] = useState(prestador.email);
+    const [cpf, setCpf] = useState(prestador.cpf);
+    const [senha, setSenha] = useState(prestador.senha);
+    const [telefone, setTelefone] = useState(prestador.telefone);
+    const [city, setCity] = useState(prestador.city);
+    const [referencia, setReferencia] = useState(prestador.referencia);
+    const [sobre, setSobre] = useState(prestador.sobre);
 
-    const prestadorCpf = prestadores.cpf;
+    const prestadorCpf = route.params.prestador.cpf;
+    console.log(prestadorCpf)
 
     async function handleAlterar() {
-          const data = { 
-              nome,
-              email,
-              telefone,
-              city,
-              tipodetrabalho,
-              referencia,
-              sobre
-         };
-          try {
+        try {
+            const data = {
+                nome,
+                email,
+                telefone,
+                senha,
+                city,
+                referencia,
+                sobre
+            };
             const response = await api.put(`editarprestador/${prestadorCpf}`, data);
-            navigation.navigate("DadosPessoais");
-          } catch (err) {
-            alert("Erro ao alterar dados, tente novamente.");
-          }
-      }
-      const erroRecuperar = () =>
+            return handleNavigateToDadosPessoais();
+        } catch (err) {
+            Alert(erroAlterar())
+        }
+    }
+    const erroAlterar = () =>
         Alert.alert("Erro ao Alterar Dados", "Tente novamente!", [
-          {
-            text: "Ok",
-            onPress: () => console.log(),
-          },
+            {
+                text: "Ok",
+                onPress: () => console.log(),
+            },
         ]);
 
     return (
         <View style={styles.container}>
             <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
-                <Text style={[styles.header, { marginLeft: 10, marginStart: 10}]} onPress={handleNavigateToPrincipal}>
+                <Text style={[styles.header, { marginLeft: 10, marginStart: 10 }]} onPress={handleNavigateToDadosPessoais}>
                     <Text>
                         <Icon name="arrow-left" size={30} color="#0426B0" />
                     </Text>
@@ -71,24 +72,24 @@ const AlterarDados = () => {
                 </View>
                 <Text style={styles.text}>
                     Editar Dados
-        </Text>
-                <TextInput style={styles.input} value={nome} onChangeText={setNome} autoCorrect={false} placeholder="Digite seu nome" />
-                <TextInput style={styles.input} value={email} onChangeText={setEmail} placeholder="Digite sua e-mail" />
-                <TextInput style={styles.input} value={cpf} keyboardType="number-pad" onChangeText={setCpf} placeholder="Digite seu CPF" />
-                <TextInput style={styles.input} value={telefone} keyboardType="number-pad" onChangeText={setTelefone} placeholder="Digite seu telefone" />
-                <TextInput style={styles.input} value={cidade} onChangeText={setCidade} autoCorrect={false} placeholder="Digite sua cidade" />
-                <TextInput style={styles.input} value={tipodetrabalho} onChangeText={setTipodetrabalho} placeholder="Tipo de trabalho" />
-                <TextInput style={styles.input} value={referencia} onChangeText={setReferencia} autoCorrect={false} placeholder="Referência" />
-                <TextInput style={styles.input} value={sobre} onChangeText={setSobre} placeholder="Fale sobre você" />
+                </Text>
+                <Text style={styles.textText}>Nome:</Text><TextInput style={styles.input} onChangeText={setNome} autoCorrect={false} placeholder={prestador.nome} placeholderTextColor="#000" />
+                <Text style={styles.textText}>Email:</Text><TextInput style={styles.input} onChangeText={setEmail} placeholder={prestador.email} placeholderTextColor="#000" />
+                <Text style={styles.textText}>CPF:</Text><TextInput style={styles.input} keyboardType="number-pad" onChangeText={setCpf} placeholder={prestador.cpf} placeholderTextColor="#000" />
+                <Text style={styles.textText}>Senha:</Text><TextInput style={styles.input} placeholder="Senha" placeholderTextColor="#000" />
+                <Text style={styles.textText}>Telefone:</Text><TextInput style={styles.input} keyboardType="number-pad" onChangeText={setTelefone} placeholder={prestador.telefone} placeholderTextColor="#000" />
+                <Text style={styles.textText}>Cidade:</Text><TextInput style={styles.input} onChangeText={setCity} autoCorrect={false} placeholder={prestador.city} placeholderTextColor="#000" />
+                <Text style={styles.textText}>Referência:</Text><TextInput style={styles.input} onChangeText={setReferencia} autoCorrect={false} placeholder={prestador.referencia} placeholderTextColor="#000" />
+                <Text style={styles.textText}>Fale sobre você:</Text><TextInput style={styles.input} onChangeText={setSobre} placeholder={prestador.sobre} placeholderTextColor="#000" />
                 <BaseButton style={styles.button} onPress={handleAlterar}>
                     <Text style={styles.buttonText}>
                         Alterar
-        </Text>
+                    </Text>
                 </BaseButton>
                 <BaseButton style={styles.button} onPress={handleNavigateToPrincipal}>
                     <Text style={styles.buttonText}>
                         Cancelar
-        </Text>
+                    </Text>
                 </BaseButton>
             </ScrollView>
         </View>
@@ -98,7 +99,11 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         padding: 24,
-        // marginTop: 30,
+    },
+    textText: {
+        fontSize: 16,
+        fontWeight: 'bold',
+
     },
     header: {
         flex: 1,
@@ -115,7 +120,7 @@ const styles = StyleSheet.create({
         marginBottom: 7,
     },
     input: {
-        height: 60,
+        height: 55,
         backgroundColor: "#FFF",
         borderRadius: 10,
         marginBottom: 8,
@@ -124,10 +129,9 @@ const styles = StyleSheet.create({
     },
     button: {
         backgroundColor: "#0426B0",
-        height: 60,
+        height: 55,
         flexDirection: "row",
         borderRadius: 10,
-        overflow: "hidden",
         alignItems: "center",
         marginTop: 8,
     },

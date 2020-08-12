@@ -1,12 +1,13 @@
 import React, { useState, useEffect} from 'react';
 import {View, StyleSheet, Text, TextInput} from 'react-native';
 import {BaseButton, ScrollView} from "react-native-gesture-handler";
-import {useNavigation} from "@react-navigation/native";
+import {useNavigation, useRoute} from "@react-navigation/native";
 import { Feather as Icon } from '@expo/vector-icons';
 
 
 const AdServicos = () => {
   const navigation = useNavigation();
+  const route = useRoute();
 
   function handleNavigateToPrincipal() {
     navigation.navigate("Principal");

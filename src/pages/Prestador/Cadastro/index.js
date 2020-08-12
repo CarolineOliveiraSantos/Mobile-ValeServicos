@@ -5,7 +5,6 @@ import { useNavigation } from "@react-navigation/native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
-// import { Formik } from 'formik';
 
 const Cadastro = () => {
   const navigation = useNavigation();

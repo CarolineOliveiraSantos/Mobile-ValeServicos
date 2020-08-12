@@ -4,11 +4,12 @@ import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
-import Prestadores from "../../Visitante/Prestadores";
 
   const DadosPessoais = () => {
   const navigation = useNavigation();
   const route = useRoute();
+
+  const prestador = route.params.prestador;
 
   const [prestadores, setPrestadores] = useState([route.params.prestador]);
   console.log(route.params.prestador)
