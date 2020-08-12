@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Alert, AsyncStorage } from "react-native";
+import { View, StyleSheet, Text, Alert } from "react-native";
 import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
@@ -9,10 +9,10 @@ import api from "../../../services/api";
   const navigation = useNavigation();
   const route = useRoute();
 
-  const prestador = route.params.prestador;
+  const prestadorCpf = route.params.prestador.cpf
 
-  const [prestadores, setPrestadores] = useState([route.params.prestador]);
-  console.log(route.params.prestador)
+  const [prestadores, setPrestadores] = useState([]);
+  console.log(prestadores)
 
   function handleNavigateToPrincipal() {
     navigation.goBack();
@@ -23,21 +23,17 @@ import api from "../../../services/api";
   function handleNavigateToAlterarDados(prestador) {
     navigation.navigate("AlterarDados", {prestador});
   }
-  // const [prestadores, setPrestadores] = useState([]);
-  
-  const prestadorCpf = AsyncStorage.getItem("cpf");
-  
-  // const prestadorCpf = prestador.cpf;
-//   useEffect(() => {
-//     api.get('profile', {
-//         headers: {
-//           Authorization: prestadorCpf,
-//         }
-//     }).then(response => {
-//         setPrestadores(response.data);
-        
-//     })
-// }, [prestadorCpf]);
+
+
+  useEffect(() => {
+    api.get(`profile/${prestadorCpf}`, {
+        headers: {
+            Authorization: prestadorCpf,
+        }
+    }).then(response => {
+        setPrestadores(response.data);
+    })
+}, [prestadores]);
 
 const id = route.params.prestador.id
   async function handleDeleteAccount() {
@@ -109,8 +105,7 @@ const id = route.params.prestador.id
 
               <Text style={styles.data}>Referência:</Text>
               <Text style={styles.dataValue}>{prestador.referencia}</Text>
-            </View>
-          ))}
+           
           <BaseButton style={styles.button}>
             <Text style={styles.buttonText} onPress={() => createAlert()}>
               Excluir conta
@@ -122,6 +117,8 @@ const id = route.params.prestador.id
               Editar
             </Text>
           </BaseButton>
+          </View>
+          ))}
         </View>
       </ScrollView>
     </>

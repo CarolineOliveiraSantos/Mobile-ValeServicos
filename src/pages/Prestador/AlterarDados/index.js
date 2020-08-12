@@ -10,12 +10,11 @@ const AlterarDados = () => {
     const navigation = useNavigation();
     const route = useRoute();
 
+    const [prestadores, setPrestadores] = useState([]);
+    console.log(prestadores)
     const prestador = route.params.prestador;
     console.log(route.params.prestador)
 
-    function handleNavigateToPrincipal() {
-        navigation.navigate("Principal");
-    }
     function handleNavigateToDadosPessoais() {
         navigation.navigate("DadosPessoais");
     }
@@ -31,6 +30,16 @@ const AlterarDados = () => {
 
     const prestadorCpf = route.params.prestador.cpf;
     console.log(prestadorCpf)
+
+    useEffect(() => {
+        api.get(`profile/${prestadorCpf}`, {
+            headers: {
+                Authorization: prestadorCpf,
+            }
+        }).then(response => {
+            setPrestadores(response.data);
+        })
+    }, [prestadores]);
 
     async function handleAlterar() {
         try {
@@ -73,6 +82,9 @@ const AlterarDados = () => {
                 <Text style={styles.text}>
                     Editar Dados
                 </Text>
+
+                {prestadores.map((prestador) => (
+                <View keyExtractor={prestador => String(prestador.id) }>
                 <Text style={styles.textText}>Nome:</Text><TextInput style={styles.input} onChangeText={setNome} autoCorrect={false} placeholder={prestador.nome} placeholderTextColor="#000" />
                 <Text style={styles.textText}>Email:</Text><TextInput style={styles.input} onChangeText={setEmail} placeholder={prestador.email} placeholderTextColor="#000" />
                 <Text style={styles.textText}>CPF:</Text><TextInput style={styles.input} keyboardType="number-pad" onChangeText={setCpf} placeholder={prestador.cpf} placeholderTextColor="#000" />
@@ -81,12 +93,14 @@ const AlterarDados = () => {
                 <Text style={styles.textText}>Cidade:</Text><TextInput style={styles.input} onChangeText={setCity} autoCorrect={false} placeholder={prestador.city} placeholderTextColor="#000" />
                 <Text style={styles.textText}>Referência:</Text><TextInput style={styles.input} onChangeText={setReferencia} autoCorrect={false} placeholder={prestador.referencia} placeholderTextColor="#000" />
                 <Text style={styles.textText}>Fale sobre você:</Text><TextInput style={styles.input} onChangeText={setSobre} placeholder={prestador.sobre} placeholderTextColor="#000" />
+                </View>
+                 ))}
                 <BaseButton style={styles.button} onPress={handleAlterar}>
                     <Text style={styles.buttonText}>
                         Alterar
                     </Text>
                 </BaseButton>
-                <BaseButton style={styles.button} onPress={handleNavigateToPrincipal}>
+                <BaseButton style={styles.button} onPress={handleNavigateToDadosPessoais}>
                     <Text style={styles.buttonText}>
                         Cancelar
                     </Text>
