@@ -12,8 +12,8 @@ const AdServicos = () => {
   function handleNavigateToPrincipal() {
     navigation.navigate("Principal");
   }
-  function handleNavigateToListaServicos() {
-    navigation.navigate("ListaServicos");
+  function handleNavigateToBack() {
+    navigation.goBack();
   }
 
   const [tipodeservico, setTipodeservico] = useState("");
@@ -23,7 +23,7 @@ const AdServicos = () => {
   return (
     <View style={styles.container}>
         <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
-        <Text style={[styles.header, { marginLeft: 10, marginStart: 10}]} onPress={handleNavigateToListaServicos}>
+        <Text style={[styles.header, { marginLeft: 10, marginStart: 10}]} onPress={handleNavigateToBack}>
             <Text>
             <Icon name="arrow-left" size={30} color="#0426B0" />
             </Text>
@@ -32,7 +32,7 @@ const AdServicos = () => {
       <TextInput style={styles.input} value={imagem} onChangeText={setImagem} placeholder="Imagem"/>
       <TextInput style={styles.input} value={tipodeservico} onChangeText={setTipodeservico} placeholder="Tipo de serviço"/>
       <TextInput style={styles.input} value={descricao} onChangeText={setDescricao} placeholder="Descreva seu serviços" />
-      <BaseButton style={styles.button} onPress={handleNavigateToListaServicos}>
+      <BaseButton style={styles.button} onPress={handleNavigateToBack}>
         <Text style={styles.buttonText}>
           Alterar
         </Text>

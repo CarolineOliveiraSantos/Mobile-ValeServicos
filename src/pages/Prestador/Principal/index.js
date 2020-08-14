@@ -16,11 +16,11 @@ const Principal = () => {
     function handleNavigateToDadosPessoais(prestador) {
       navigation.navigate("DadosPessoais", {prestador});
     }
-    function handleNavigateToServicos() {
-        navigation.navigate("ListaServicos");
+    function handleNavigateToServicos(prestador) {
+        navigation.navigate("ListaServicos", {prestador});
     }
-    function handleNavigateToAdServicos() {
-        navigation.navigate("AdServicos");
+    function handleNavigateToAdServicos(prestador) {
+        navigation.navigate("AdServicos", {prestador});
     }
     function handleNavigateToHome() {
         navigation.navigate("Home");
@@ -51,10 +51,10 @@ const Principal = () => {
                 <Text style= {styles.menuIcon} onPress={() => handleNavigateToDadosPessoais(prestador)}>
                     <MaterialCommunityIcons name="account-badge-horizontal-outline" size={32} color="white" />                  
                 </Text>
-                <Text style= {styles.menuIcon} onPress={handleNavigateToServicos}>
+                <Text style= {styles.menuIcon} onPress={() => handleNavigateToServicos(prestador)}>
                     <FontAwesome5 name="tools" size={30} color="white" />
                 </Text>
-                <Text style= {styles.menuIcon} onPress={handleNavigateToAdServicos}>
+                <Text style= {styles.menuIcon} onPress={() => handleNavigateToAdServicos(prestador)}>
                     <Feather name="plus-circle" size={34} color="white" />
                 </Text>
                 <Text style= {styles.menuIcon} onPress={createAlert}>

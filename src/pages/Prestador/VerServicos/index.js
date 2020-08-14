@@ -1,11 +1,18 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Alert} from 'react-native';
 import { BaseButton, ScrollView } from "react-native-gesture-handler";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from '@expo/vector-icons';
+import api from "../../../services/api";
 
 const VerServicos = () => {
     const navigation = useNavigation();
+    const route = useRoute();
+
+    const servico = route.params.servico;
+    const prestadorCpf = route.params.prestador.cpf;
+    const prestadorId = route.params.prestador.id;
+    const [prestadores, setPrestadores] = useState([]);
 
     function handleNavigateToPrincipal() {
         navigation.navigate('Principal')
@@ -17,19 +24,43 @@ const VerServicos = () => {
         navigation.navigate('AlterarServicos')
     }
 
-    const createAlert = () =>
+    useEffect(() => {
+        api.get(`profile/${prestadorCpf}`, {
+            headers: {
+                Authorization: prestadorCpf,
+            }
+        }).then(response => {
+            setPrestadores(response.data);
+        })
+    }, [prestadores]);
+
+    const id = route.params.servico.id
+  async function handleDeleteAccount() {
+    try {
+      await api.delete(`removeservico/${id}`,  {
+        headers: {
+            Authorization: prestadorId,
+        }});
+      setPrestadores(prestadores.filter((prestador) => prestador.id !== id));
+      return handleNavigateToListaServicos()
+    } catch (err) {
+      alert("Erro ao excluir serviço, tente novamente.");
+    }
+  }
+
+  const createAlert = () =>
     Alert.alert(
       "Excluir",
-      "Tem certeza que deseja excluir o serviço?",
+      "Tem certeza que deseja excluir esse serviço?",
       [
         {
           text: "Cancelar",
           onPress: () => console.log(),
         },
         {
-            text: "Excluir",
-          onPress: () => console.log({handleNavigateToPrincipal}),
-        }
+          text: "Excluir",
+          onPress: () => {return handleDeleteAccount()},
+        },
       ],
       { cancelable: false }
     );
@@ -46,11 +77,11 @@ const VerServicos = () => {
                 <Text style={styles.title}>Serviço</Text>
                 <View style={styles.descriptionContainer}>
                 <Text style={[styles.description, {marginTop: 7}]}>Imagem:</Text>
-                <Text style={styles.dataValue}>UIUI</Text>
+                <Text style={styles.dataValue}>Tem que por a imagem</Text>
                 <Text style={styles.description}>Serviço:</Text>
                 <Text style={styles.dataValue}>Limpeza em Geral</Text>
                 <Text style={styles.description}>Descrição do Serviço:</Text>
-                <Text style={styles.dataValue}>TCC é difícil viu menina,TCC é difícil viu menina, TCC é difícil viu menina,TCC é difícil viu menina </Text>
+                <Text style={styles.dataValue}>{servico.descricao}</Text>
                 </View>
 
                 <BaseButton style={styles.button}>

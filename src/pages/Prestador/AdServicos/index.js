@@ -1,47 +1,79 @@
-import React, { useState, useEffect} from 'react';
-import {View, StyleSheet, Text, TextInput} from 'react-native';
-import {BaseButton, ScrollView} from "react-native-gesture-handler";
-import {useNavigation} from "@react-navigation/native";
+import React, { useState, useEffect } from 'react';
+import { View, StyleSheet, Text, TextInput, FlatList, Picker } from 'react-native';
+import { BaseButton, ScrollView } from "react-native-gesture-handler";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from '@expo/vector-icons';
+import api from "../../../services/api";
 
 
 const AdServicos = () => {
   const navigation = useNavigation();
+  const route = useRoute();
+  const prestadorIdd = route.params.prestador.id;
+  const prestador = route.params.prestador;
+  console.log(prestadorIdd)
 
-  function handleNavigateToListaServicos() {
-    navigation.navigate("ListaServicos");
+  function handleNavigateToListaServicos(prestador) {
+    navigation.navigate("ListaServicos", {prestador});
   }
   function handleNavigateToPrincipal() {
     navigation.navigate("Principal");
   }
 
-  const [tipodeservico, setTipodeservico] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [imagem, setImagem ] = useState("");
+  const [img_url, setImg_url] = useState("");
+  const [servico_id, setServicoId] = useState("");
+  const [prestador_id, setPrestadorId] = useState("");
+
+  async function handleAddServico() {
+    const data = {
+      img_url,
+      servico_id : 1,
+      descricao,
+      prestador_id : prestadorIdd
+    };
+    try {
+      const response = await api.post(`addservico/${prestadorIdd}`, data)
+      return handleNavigateToListaServicos(prestador);
+    } catch (err) {
+      alert("Erro ao adicionar serviço, tente novamente.");
+    }
+  }
+
+  useEffect(() => {
+    api.get("servicoslist").then((res) => {
+      setServicoId(res.data);
+    });
+  });
+
+  // const allServicos = await api.get(`/servicoslist`);
+  //     setServicoId(allServicos.data);
+  //     console.log(allServicos)
 
   return (
     <View style={styles.container}>
-        <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
-        <Text style={[styles.header, { marginLeft: 20, marginStart: 10}]} onPress={handleNavigateToPrincipal}>
-            <Text>
+      <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
+        <Text style={[styles.header, { marginLeft: 20, marginStart: 10 }]} onPress={handleNavigateToPrincipal}>
+          <Text>
             <Icon name="arrow-left" size={30} color="#0426B0" />
-            </Text>
-            </Text>
-      <Text  style={styles.text}>Novo Serviço</Text>
-      <TextInput style={styles.input} value={imagem} onChangeText={setImagem} placeholder="Imagem"/>
-      <TextInput style={styles.input} value={tipodeservico} onChangeText={setDescricao} placeholder="Tipo de serviço"/>
-      <TextInput style={styles.input} value={descricao} onChangeText={setDescricao} placeholder="Descreva seu serviços" />
-      <BaseButton style={styles.button} onPress={handleNavigateToListaServicos}>
-        <Text style={styles.buttonText}>
-          Salvar
+          </Text>
         </Text>
-      </BaseButton>
-      <BaseButton style={styles.button} onPress={handleNavigateToPrincipal}>
-        <Text style={styles.buttonText}>
-          Cancelar
+        <Text style={styles.text}>Novo Serviço</Text>
+        <TextInput style={styles.input} value={prestador_id} editable={false} onChangeText={setPrestadorId} placeholder="ID" />
+        <TextInput style={styles.input} value={img_url} onChangeText={setImg_url} placeholder="Imagem" />
+        <TextInput style={styles.input} value={servico_id} onChangeText={setServicoId} placeholder="Tipo de serviço"/>
+        <TextInput style={styles.input} value={descricao} onChangeText={setDescricao} placeholder="Descreva seu serviços" />
+        <BaseButton style={styles.button} onPress={handleAddServico}>
+          <Text style={styles.buttonText}>
+            Salvar
         </Text>
-      </BaseButton>
-        </ScrollView>
+        </BaseButton>
+        <BaseButton style={styles.button} onPress={handleNavigateToPrincipal}>
+          <Text style={styles.buttonText}>
+            Cancelar
+        </Text>
+        </BaseButton>
+      </ScrollView>
     </View>
   );
 };
@@ -54,14 +86,14 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: "space-between",
-},
+  },
   text: {
     textAlign: "center",
     marginBottom: 15,
     fontSize: 20,
     fontWeight: 'bold',
   },
-  buttonIcon:{
+  buttonIcon: {
     alignItems: "center",
     marginBottom: 7,
   },
