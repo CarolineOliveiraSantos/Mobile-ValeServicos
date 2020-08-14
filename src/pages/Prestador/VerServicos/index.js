@@ -10,8 +10,10 @@ const VerServicos = () => {
     const route = useRoute();
 
     const servico = route.params.servico;
+    const prestador = route.params.prestador;
     const prestadorCpf = route.params.prestador.cpf;
     const prestadorId = route.params.prestador.id;
+    const [servicos] = useState([route.params.servico]);
     const [prestadores, setPrestadores] = useState([]);
 
     function handleNavigateToPrincipal() {
@@ -20,8 +22,8 @@ const VerServicos = () => {
     function handleNavigateToListaServicos() {
         navigation.navigate('ListaServicos')
     }
-    function handleNavigateToAlterarServicos() {
-        navigation.navigate('AlterarServicos')
+    function handleNavigateToAlterarServicos(servico, prestador) {
+        navigation.navigate('AlterarServicos', {servico, prestador})
     }
 
     useEffect(() => {
@@ -75,6 +77,7 @@ const VerServicos = () => {
                     </Text>
                 </Text>
                 <Text style={styles.title}>Serviço</Text>
+                
                 <View style={styles.descriptionContainer}>
                 <Text style={[styles.description, {marginTop: 7}]}>Imagem:</Text>
                 <Text style={styles.dataValue}>Tem que por a imagem</Text>
@@ -85,7 +88,7 @@ const VerServicos = () => {
                 </View>
 
                 <BaseButton style={styles.button}>
-                    <Text style={styles.buttonText} onPress={handleNavigateToAlterarServicos}>
+                    <Text style={styles.buttonText} onPress={() =>handleNavigateToAlterarServicos(servico, prestador)}>
                     Editar
                 </Text>
                     <Text style={styles.buttonText} onPress={createAlert}>

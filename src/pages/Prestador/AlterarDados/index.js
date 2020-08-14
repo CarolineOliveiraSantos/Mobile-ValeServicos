@@ -117,7 +117,6 @@ const styles = StyleSheet.create({
     textText: {
         fontSize: 16,
         fontWeight: 'bold',
-
     },
     header: {
         flex: 1,
