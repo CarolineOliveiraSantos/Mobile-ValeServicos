@@ -12,8 +12,8 @@ const loginContratante = () => {
 
   const navigation = useNavigation();
 
-  function handleNavigateToHomeContratante() {
-    navigation.navigate("homeContratante" );
+  function handleNavigateToHomeContratante(contratante) {
+    navigation.navigate("homeContratante", {contratante} );
   }
   function handleNavigateToHome() {
     navigation.goBack("Home");
@@ -35,8 +35,9 @@ const loginContratante = () => {
         AsyncStorage.setItem("senha", senha);
         AsyncStorage.setItem("nome", response.data.nome);
         AsyncStorage.setItem("contratante", response.data)
+        const contratante = response.data;
         console.log(cpf, response.data);
-        return handleNavigateToHomeContratante();
+        return handleNavigateToHomeContratante(contratante);
       }
     } catch (err) {
       return(erroLogin());

@@ -1,23 +1,47 @@
-import React, {useState} from 'react';
-import { View, Text, StyleSheet, TextInput} from 'react-native';
+import React, {useState, useEffect} from 'react';
+import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useRoute } from '@react-navigation/native';
 import { Feather as Icon } from '@expo/vector-icons';
-import {RectButton} from 'react-native-gesture-handler';
+import {RectButton, ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
 import { AntDesign } from '@expo/vector-icons'; 
+import api from "../../../services/api";
 
 const Avaliar = () => {
-    const [valor, setValor] = useState('');
-    const [comentario, setComentario] = useState('');
-
     const navigation = useNavigation();
+    const route = useRoute()
+
+    const servicoId = route.params.prestador.id;
+    const prestadores = route.params.prestadores;
+    const contratanteId = route.params.contratante.id;
+console.log(prestadores)
+console.log([prestadores.id])
+    const [nota, setNota] = useState("");
+    const [comentario, setComentario] = useState("");
 
     function handleNavigateToBack() {
         navigation.goBack()
     }
 
+    async function handleAvaliar() {
+        const data = {
+            nota,
+            comentario,
+            contratante_id : contratanteId,
+            prestador_id,
+            servprestado_id : servicoId
+        };
+        try {
+          const response = await api.post(`avaliacao/${contratanteId}`, data);
+          return navigation.navigate("Detalhess")
+        } catch (err) {
+          alert("Erro ao avaliar serviço, tente novamente.");
+        }
+      }
+
     return (
         <View style={styles.container}>
+      <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
             <Text style={[{ marginLeft: 20, marginStart: 20, marginTop: 10 }]} onPress={handleNavigateToBack}>
                 <Text>
                     <Icon name="arrow-left" size={30} color="#0426B0" />
@@ -32,20 +56,21 @@ const Avaliar = () => {
                     <Entypo name="emoji-neutral" size={30} color="#0426B0" />
                     <Entypo name="emoji-happy" size={30} color="#0426B0" />
                 </View>
-                <TextInput style={styles.input} value={valor} maxLength={1} keyboardType = "number-pad" onChangeText={setValor} placeholder="Faça a sua avaliação" />
-                <TextInput style={[styles.input, {height: 80}]} value={comentario}  onChangeText={setComentario} placeholder="Comentário" />
-                <View style={{ paddingStart: 20, paddingEnd: 20 }}>
-                <RectButton style={styles.button}>
+                <TextInput style={styles.input} value={nota} onChangeText={setNota} maxLength={1} keyboardType="number-pad"  placeholder="Faça a sua avaliação" />
+                <TextInput style={[styles.input, {height: 80}]} value={comentario} onChangeText={setComentario} placeholder="Comentário" />
+
+                <RectButton style={[styles.button, {marginStart: 20, marginEnd: 20}]}>
               <View style={styles.buttonIcon}>
                   <Text>
                   <AntDesign name="check" size={30} color="white" />
                   </Text>
               </View>
-              <Text style={styles.buttonText}>
+              <Text style={styles.buttonText} onPress={handleAvaliar}>
                 Finalizar Avaliação
               </Text>
           </RectButton>
-          </View>
+
+          </ScrollView>
         </View>
     )
 }

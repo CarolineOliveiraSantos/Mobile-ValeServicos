@@ -88,7 +88,7 @@ const AlterarDados = () => {
                 <Text style={styles.textText}>Nome:</Text><TextInput style={styles.input} onChangeText={setNome} autoCorrect={false} placeholder={prestador.nome} placeholderTextColor="#000" />
                 <Text style={styles.textText}>Email:</Text><TextInput style={styles.input} onChangeText={setEmail} placeholder={prestador.email} placeholderTextColor="#000" />
                 <Text style={styles.textText}>CPF:</Text><TextInput style={styles.input} keyboardType="number-pad" onChangeText={setCpf} placeholder={prestador.cpf} placeholderTextColor="#000" />
-                <Text style={styles.textText}>Senha:</Text><TextInput style={styles.input} placeholder="Senha" placeholderTextColor="#000" />
+                <Text style={styles.textText}>Senha:</Text><TextInput style={styles.input} placeholder="Senha" secureTextEntry={true} onChangeText={setSenha}  placeholderTextColor="#000" />
                 <Text style={styles.textText}>Telefone:</Text><TextInput style={styles.input} keyboardType="number-pad" onChangeText={setTelefone} placeholder={prestador.telefone} placeholderTextColor="#000" />
                 <Text style={styles.textText}>Cidade:</Text><TextInput style={styles.input} onChangeText={setCity} autoCorrect={false} placeholder={prestador.city} placeholderTextColor="#000" />
                 <Text style={styles.textText}>Referência:</Text><TextInput style={styles.input} onChangeText={setReferencia} autoCorrect={false} placeholder={prestador.referencia} placeholderTextColor="#000" />

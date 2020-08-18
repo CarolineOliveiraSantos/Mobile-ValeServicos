@@ -82,6 +82,7 @@ const cadastroContratante = () => {
           style={styles.input}
           value={senha}
           onChangeText={setSenha}
+          secureTextEntry={true}
           placeholder="Digite sua senha"
         />
         <TextInput

@@ -9,12 +9,13 @@ import api from "../../../services/api";
 const Prestadoress = () => {
   const navigation = useNavigation();
   const route = useRoute();
+  const contratante = route.params.contratante;
 
   function handleNavigateToHome() {
     navigation.navigate("homeContratante");
   }
-  function handleNavigateToDetalhes(prestador) {
-    navigation.navigate("Detalhess", { prestador });
+  function handleNavigateToDetalhes(prestador, contratante) {
+    navigation.navigate("Detalhess", { prestador, contratante });
   }
 
   const [prestadores, setPrestadores] = useState([]);
@@ -78,7 +79,7 @@ const Prestadoress = () => {
               <Text style={[styles.description]}>Telefone:</Text>
               <Text style={styles.dataValue}>{prestador.telefone}</Text>
 
-              <TouchableOpacity style={styles.linkSection} onPress={() => handleNavigateToDetalhes(prestador)}>
+              <TouchableOpacity style={styles.linkSection} onPress={() => handleNavigateToDetalhes(prestador, contratante)}>
                 <Text style={styles.linkText}>Ver mais</Text>
                 <Feather name="arrow-right" size={30} color="#0426B0" />
               </TouchableOpacity>

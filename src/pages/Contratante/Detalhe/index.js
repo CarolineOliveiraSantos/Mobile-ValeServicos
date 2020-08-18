@@ -1,21 +1,62 @@
-import React from 'react';
-import { View, StyleSheet, Text, Linking, TouchableOpacity } from 'react-native';
+import React, {useEffect, useState} from 'react';
+import { View, StyleSheet, Text, Linking, TouchableOpacity, DevSettings } from 'react-native';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from '@expo/vector-icons';
 import { FontAwesome } from '@expo/vector-icons';
 import * as MailComposer from 'expo-mail-composer';
+import api from "../../../services/api";
+import { ScrollView } from 'react-native-gesture-handler';
 
 const Detalhess = () => {
     const navigation = useNavigation();
     const route = useRoute();
     const prestador = route.params.prestador;
+    const contratante = route.params.contratante;
+    const servicoId = route.params.prestador.id;
+    const prestadorCpf = route.params.prestador.cpf;
+    const [prestadores, setPrestadores] = useState([]);
+    const [avaliacoes, setAvaliacoes] = useState([]);
+    const [avaliador, setAvaliador] = useState([]);
 
     function handleNavigateToPrestadores() {
         navigation.goBack()
     }
-    function handleNavigateToAvaliar() {
-        navigation.navigate("Avaliar")
+    function handleNavigateToAvaliar(prestador, contratante, prestadores) {
+        navigation.navigate("Avaliar", {prestador, contratante, prestadores})
     }
+
+    useEffect(() => {
+        api.get(`avaliacoes/${servicoId}`, {
+        headers: {
+            Authorization: servicoId,
+        }
+    }).then((response) => {
+        setAvaliacoes(response.data)
+    })
+    }, [avaliacoes])
+
+    const contratanteId = avaliacoes.map(function(item){
+        return item.contratante_id;
+     });
+    console.log(contratanteId)
+     useEffect(() => {
+        api.get(`contratante/${contratanteId}`).then(response => {
+            setAvaliador(response.data);
+        })
+    }, [avaliador]);
+    console.log(avaliador)
+
+
+    useEffect(() => {
+        api.get(`profile/${prestadorCpf}`, {
+            headers: {
+                Authorization: prestadorCpf,
+            }
+        }).then(response => {
+            setPrestadores(response.data);
+        })
+    }, [prestadores]);
+
     const message = `Olá ${prestador.nome}, estou interessado em seus serviços. Vim do Vale Serviços. Podemos conversar?`
 
     function sendMail() {
@@ -31,6 +72,7 @@ const Detalhess = () => {
     }
 
     return (
+        <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
         <View style={styles.container}>
             <Text style={[styles.header, { marginLeft: 10, marginStart: 10, marginTop: 10 }]} onPress={handleNavigateToPrestadores}>
                 <Text>
@@ -51,6 +93,7 @@ const Detalhess = () => {
                     </Text>
                 </View>
             </View>
+           
             <View style={styles.descriptionContainer}>
                 <Text style={styles.description}>Nome:</Text>
                 <Text style={styles.dataValue}>{prestador.nome}</Text>
@@ -62,10 +105,9 @@ const Detalhess = () => {
                 <Text style={styles.dataValue}>{prestador.referencia}</Text>
                 <Text style={styles.description}>Cidade:</Text>
                 <Text style={styles.dataValue}>{prestador.city}/{prestador.uf}</Text>
-            </View>
 
-            <TouchableOpacity style={styles.buttonn}>
-                <Text style={[styles.buttonText, { backgroundColor: '#191970' }]} onPress={handleNavigateToAvaliar}>
+                <TouchableOpacity style={styles.buttonn}>
+                <Text style={[styles.buttonText, { backgroundColor: '#191970' }]} onPress={() => handleNavigateToAvaliar(prestador, contratante, prestadores)}>
                     Avalie o serviço
                 </Text>
             </TouchableOpacity>
@@ -78,12 +120,67 @@ const Detalhess = () => {
                     WhatsApp
                 </Text>
             </TouchableOpacity>
+
+            </View>
+
+            <Text style={styles.text}>
+                Avaliações deste serviço:
+            </Text>  
+
+            {avaliacoes.map((avaliacao) => (
+                <View keyExtractor={(avaliacao) => String(avaliacao.id)}>
+                    <View style={styles.descriptionContainerr}>
+                        <Text style={styles.descriptionn}>Avaliador: <Text style={styles.dataValuee}>{contratante.nome}</Text></Text>
+                        <Text style={styles.descriptionn}>Nota: <Text style={styles.dataValuee}>{avaliacao.nota}</Text></Text>
+                        <Text style={styles.descriptionn}>Comentário: <Text style={styles.dataValuee}>{avaliacao.comentario}</Text></Text>
+                    </View>
+                </View>
+            ))}
+
         </View>
+        </ScrollView>
     );
 }
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+    },
+    text: {
+        fontSize: 18,
+        fontWeight: "bold",
+        color: "rgba(4, 38, 176, 1)",
+        paddingEnd: 20,
+        paddingStart: 20,
+        marginBottom: 10
+    },
+    descriptionn: {
+        paddingHorizontal: 10,
+        fontSize: 16,
+        flexDirection: "row",
+        color: "black",
+        marginBottom: 3
+      },
+      dataValuee: {
+        flexDirection: "row",
+        paddingHorizontal: 10,
+        fontSize: 16,
+        marginBottom: 10,
+        color: "black",
+        fontWeight: "bold",
+        paddingEnd: 20,
+        paddingStart: 20
+      },
+      descriptionContainerr: {
+        paddingTop: 10,
+        paddingBottom: 10,
+        justifyContent: "space-between",
+        marginStart: 10,
+        marginEnd: 10,
+        backgroundColor: "rgba(4, 38, 176, 0.3)",
+        marginBottom: 15,
+        paddingHorizontal: 5,
+        color: "#41414d",
+        borderRadius: 5,
     },
     descriptionContainer: {
         justifyContent: "space-between",

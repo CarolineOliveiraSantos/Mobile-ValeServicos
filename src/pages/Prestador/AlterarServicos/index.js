@@ -12,7 +12,7 @@ const AdServicos = () => {
 
   const servico = route.params.servico;
   const prestadorId = route.params.prestador;
-  const [servicos] = useState([route.params.servico])
+  const [servicos, setServicos] = useState([])
   const [prestador, setPrestador] = useState([]);
   const servicoId = route.params.servico.id;
   console.log(servico)
@@ -29,14 +29,10 @@ const AdServicos = () => {
   const [img_url, setImg_url ] = useState(servico.img_url);
 
   useEffect(() => {
-    api.get(`profile`, {
-        headers: {
-            Authorization: prestadorId,
-        }
-    }).then(response => {
-        setPrestador(response.data);
+    api.get(`servico/${servicoId}`).then(response => {
+        setServicos(response.data);
     })
-}, [prestador]);
+}, [servicos]);
 
 async function handleAlterar() {
     try {
@@ -45,7 +41,7 @@ async function handleAlterar() {
           descricao
         };
         const response = await api.put(`alterarservico/${servicoId}`, data);
-        return handleNavigateToListaServicos();
+        return handleNavigateToBack();
     } catch (err) {
         Alert(erroAlterar())
     }
@@ -67,6 +63,7 @@ const erroAlterar = () =>
             </Text>
             </Text>
       <Text  style={styles.text}>Editar Serviço</Text>
+
       {servicos.map((servico) => (
                 <View keyExtractor={servico => String(servico.id) }>
                 <Text style={styles.textText}>Imagem</Text><TextInput style={styles.input} onChangeText={setImg_url} placeholder={servico.img_url}  placeholderTextColor="#000"/>
@@ -74,6 +71,7 @@ const erroAlterar = () =>
                 <Text style={styles.textText}>Descrição do Serviço:</Text><TextInput style={styles.input} onChangeText={setDescricao} placeholder={servico.descricao} placeholderTextColor="#000"/>
                 </View>
                  ))}
+
       <BaseButton style={styles.button} onPress={handleAlterar}>
         <Text style={styles.buttonText}>
           Alterar
@@ -84,6 +82,7 @@ const erroAlterar = () =>
           Cancelar
         </Text>
       </BaseButton>
+      
         </ScrollView>
     </View>
   );

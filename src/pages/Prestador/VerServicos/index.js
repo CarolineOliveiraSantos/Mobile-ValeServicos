@@ -13,7 +13,7 @@ const VerServicos = () => {
     const prestador = route.params.prestador;
     const prestadorCpf = route.params.prestador.cpf;
     const prestadorId = route.params.prestador.id;
-    const [servicos] = useState([route.params.servico]);
+    const [servicos, setServicos] = useState([]);
     const [prestadores, setPrestadores] = useState([]);
 
     function handleNavigateToPrincipal() {
@@ -25,6 +25,12 @@ const VerServicos = () => {
     function handleNavigateToAlterarServicos(servico, prestador) {
         navigation.navigate('AlterarServicos', {servico, prestador})
     }
+
+    useEffect(() => {
+        api.get(`servico/${id}`).then(response => {
+            setServicos(response.data);
+        })
+    }, [servicos]);
 
     useEffect(() => {
         api.get(`profile/${prestadorCpf}`, {
@@ -79,12 +85,18 @@ const VerServicos = () => {
                 <Text style={styles.title}>Serviço</Text>
                 
                 <View style={styles.descriptionContainer}>
+
+                {servicos.map((servico) => (
+                <View keyExtractor={servico => String(servico.id) }>
                 <Text style={[styles.description, {marginTop: 7}]}>Imagem:</Text>
-                <Text style={styles.dataValue}>Tem que por a imagem</Text>
+                <Text style={styles.dataValue}>{servico.img_url}</Text>
                 <Text style={styles.description}>Serviço:</Text>
                 <Text style={styles.dataValue}>Limpeza em Geral</Text>
                 <Text style={styles.description}>Descrição do Serviço:</Text>
                 <Text style={styles.dataValue}>{servico.descricao}</Text>
+                </View>
+                 ))}
+
                 </View>
 
                 <BaseButton style={styles.button}>

@@ -38,7 +38,6 @@ const Prestadores = () => {
     loadPrestadores();
   }, []);
 
-
   const serv = route.params.servico;
   console.log(route.params.servico);
 
@@ -46,7 +45,7 @@ const Prestadores = () => {
     setPrestadores(response.data);
   });
 
-  
+
   return (
     <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
       <View style={styles.container}>
@@ -66,7 +65,7 @@ const Prestadores = () => {
         </Text>
 
         <Text style={styles.headerText}>
-        Total de <Text style={styles.headerTextText}>{total} prestadores</Text>
+          Total de <Text style={styles.headerTextText}>{total} prestadores</Text>
         </Text>
 
         {prestadores.map((prestador) => (
@@ -118,7 +117,6 @@ const styles = StyleSheet.create({
     textAlign: "center",
   },
   descriptionContainer: {
-    // height: 225,
     justifyContent: "space-between",
     marginStart: 10,
     marginEnd: 10,

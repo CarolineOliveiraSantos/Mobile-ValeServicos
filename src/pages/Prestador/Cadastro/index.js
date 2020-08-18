@@ -74,6 +74,7 @@ const Cadastro = () => {
           style={styles.input}
           value={email}
           onChangeText={setEmail}
+          keyboardType="email-address"
           placeholder="E-mail"
         />
         <TextInput
@@ -88,13 +89,14 @@ const Cadastro = () => {
           style={styles.input}
           value={senha}
           onChangeText={setSenha}
+          secureTextEntry={true}
           placeholder="Digite sua senha"
         />
         <TextInput
           style={styles.input}
           value={telefone}
           maxLength={11}
-          keyboardType="number-pad"
+          keyboardType="phone-pad"
           onChangeText={setTelefone}
           placeholder="Whatsapp"
         />

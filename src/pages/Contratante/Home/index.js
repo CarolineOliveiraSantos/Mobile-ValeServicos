@@ -1,18 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, ScrollView, TouchableOpacity } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
 import { Entypo } from '@expo/vector-icons';
 
 const homeContratante = () => {
     const navigation = useNavigation();
-
+    const route = useRoute();
+    const contratante = route.params.contratante;
+    
     function handleNavigateToBack() {
         navigation.goBack();
     }
-    function handleNavigateToPrestadores(servico) {
-        navigation.navigate("Prestadoress", { servico });
+    function handleNavigateToPrestadores(servico, contratante) {
+        navigation.navigate("Prestadoress", { servico, contratante});
     }
 
     const [servicos, setServicos] = useState([]);
@@ -42,7 +44,7 @@ const homeContratante = () => {
                     <TouchableOpacity
                         keyExtractor={(servico) => String(servico.id)}
                         style={[styles.descriptionContainer, { marginTop: 15 }]}
-                        onPress={() => handleNavigateToPrestadores(servico)}
+                        onPress={() => handleNavigateToPrestadores(servico, contratante)}
                         activeOpacity={0.8}
                     >
                         <Text style={[{ marginStart: 8, marginTop: 5 }]}>
