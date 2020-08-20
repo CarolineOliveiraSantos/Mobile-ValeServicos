@@ -12,10 +12,10 @@ const Avaliar = () => {
     const route = useRoute()
 
     const servicoId = route.params.prestador.id;
+    const prestadorId = route.params.prestador.prestador_id;
     const prestadores = route.params.prestadores;
     const contratanteId = route.params.contratante.id;
-console.log(prestadores)
-console.log([prestadores.id])
+    console.log(prestadores)
     const [nota, setNota] = useState("");
     const [comentario, setComentario] = useState("");
 
@@ -28,7 +28,7 @@ console.log([prestadores.id])
             nota,
             comentario,
             contratante_id : contratanteId,
-            prestador_id,
+            prestador_id : prestadorId,
             servprestado_id : servicoId
         };
         try {

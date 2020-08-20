@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import { View, StyleSheet, Text, Linking, TouchableOpacity, DevSettings } from 'react-native';
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from '@expo/vector-icons';
 import * as MailComposer from 'expo-mail-composer';
 import api from "../../../services/api";
@@ -16,10 +17,15 @@ const Detalhess = () => {
     const prestadorCpf = route.params.prestador.cpf;
     const [prestadores, setPrestadores] = useState([]);
     const [avaliacoes, setAvaliacoes] = useState([]);
-    const [avaliador, setAvaliador] = useState([]);
 
     function handleNavigateToPrestadores() {
         navigation.goBack()
+    }
+    function handleNavigateToAllServicos(prestador) {
+        navigation.navigate("AllServicoss", {prestador})
+    }
+    function handleNavigateToAvaliacoes(prestador) {
+        navigation.navigate("Avaliacaoo", {prestador})
     }
     function handleNavigateToAvaliar(prestador, contratante, prestadores) {
         navigation.navigate("Avaliar", {prestador, contratante, prestadores})
@@ -34,18 +40,6 @@ const Detalhess = () => {
         setAvaliacoes(response.data)
     })
     }, [avaliacoes])
-
-    const contratanteId = avaliacoes.map(function(item){
-        return item.contratante_id;
-     });
-    console.log(contratanteId)
-     useEffect(() => {
-        api.get(`contratante/${contratanteId}`).then(response => {
-            setAvaliador(response.data);
-        })
-    }, [avaliador]);
-    console.log(avaliador)
-
 
     useEffect(() => {
         api.get(`profile/${prestadorCpf}`, {
@@ -74,15 +68,16 @@ const Detalhess = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
         <View style={styles.container}>
-            <Text style={[styles.header, { marginLeft: 10, marginStart: 10, marginTop: 10 }]} onPress={handleNavigateToPrestadores}>
-                <Text>
-                    <Icon name="arrow-left" size={30} color="#0426B0" />
-                </Text>
-            </Text>
+
+        <TouchableOpacity style={[styles.linkSection, {marginTop: 15}]} activeOpacity={1}>
+                <Feather name="arrow-left" size={30} color="#0426B0" onPress={() => handleNavigateToPrestadores(prestador)} />
+                <Text style={styles.linkText} onPress={() =>handleNavigateToAvaliacoes(prestador)}>Avaliações</Text>
+        </TouchableOpacity>
+
 
             <View>
-                <Text style={[{ fontWeight: "bold", fontSize: 20, marginTop: 5, marginBottom: 5, textAlign: 'center' }]}>
-                    Serviço de Limpeza
+                <Text style={[{ fontWeight: "bold", fontSize: 20, marginBottom: 5, textAlign: 'center' }]}>
+                    Perfil do Prestador
             </Text>
             </View>
 
@@ -93,49 +88,40 @@ const Detalhess = () => {
                     </Text>
                 </View>
             </View>
-           
             <View style={styles.descriptionContainer}>
                 <Text style={styles.description}>Nome:</Text>
                 <Text style={styles.dataValue}>{prestador.nome}</Text>
+                <Text style={styles.description}>Referência de Trabalho:</Text>
+                <Text style={styles.dataValue}>{prestador.referencia}</Text>
+                <Text style={styles.description}>Cidade:</Text>
+                <Text style={styles.dataValue}>{prestador.city}/{prestador.uf}</Text>
+                <Text style={[styles.description, {textAlign: "center", fontSize: 17}]}>Informações do Serviço</Text>
                 <Text style={styles.description}>Tipo de Trabalho:</Text>
                 <Text style={styles.dataValue}>{prestador.sobre}</Text>
                 <Text style={[styles.description]}>Descrição do Serviço:</Text>
                 <Text style={styles.dataValue}>{prestador.descricao}</Text>
-                <Text style={styles.description}>Referência:</Text>
-                <Text style={styles.dataValue}>{prestador.referencia}</Text>
-                <Text style={styles.description}>Cidade:</Text>
-                <Text style={styles.dataValue}>{prestador.city}/{prestador.uf}</Text>
+                
+            </View>
 
-                <TouchableOpacity style={styles.buttonn}>
+            <TouchableOpacity style={styles.linkSection} onPress={() => handleNavigateToAllServicos(prestador)}>
+                <Text style={styles.linkText}>Outros serviços deste prestador</Text>
+                <Feather name="arrow-right" size={30} color="#0426B0" />
+              </TouchableOpacity>
+
+            <TouchableOpacity style={styles.buttonn}>
                 <Text style={[styles.buttonText, { backgroundColor: '#191970' }]} onPress={() => handleNavigateToAvaliar(prestador, contratante, prestadores)}>
                     Avalie o serviço
                 </Text>
             </TouchableOpacity>
 
-            <TouchableOpacity style={styles.button}>
-                <Text style={styles.buttonText} onPress={sendMail}>
-                    Email
+            <TouchableOpacity activeOpacity={1} style={styles.button} onPress={sendMail}>
+                    <Text style={styles.buttonText}>
+                        Email
                 </Text>
-                <Text style={styles.buttonText} onPress={sendWhatsapp}>
-                    WhatsApp
+                    <Text style={styles.buttonText} onPress={sendWhatsapp}>
+                        WhatsApp
                 </Text>
             </TouchableOpacity>
-
-            </View>
-
-            <Text style={styles.text}>
-                Avaliações deste serviço:
-            </Text>  
-
-            {avaliacoes.map((avaliacao) => (
-                <View keyExtractor={(avaliacao) => String(avaliacao.id)}>
-                    <View style={styles.descriptionContainerr}>
-                        <Text style={styles.descriptionn}>Avaliador: <Text style={styles.dataValuee}>{contratante.nome}</Text></Text>
-                        <Text style={styles.descriptionn}>Nota: <Text style={styles.dataValuee}>{avaliacao.nota}</Text></Text>
-                        <Text style={styles.descriptionn}>Comentário: <Text style={styles.dataValuee}>{avaliacao.comentario}</Text></Text>
-                    </View>
-                </View>
-            ))}
 
         </View>
         </ScrollView>
@@ -233,6 +219,20 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         textAlign: 'center',
         paddingTop: 12
-    }
+    },
+    linkSection: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 15,
+        marginStart: 10,
+        marginEnd: 10,
+      },
+      linkText: {
+        fontWeight: "bold",
+        fontSize: 18,
+        paddingHorizontal: 10,
+        color: "#0426B0",
+      }
 })
 export default Detalhess;

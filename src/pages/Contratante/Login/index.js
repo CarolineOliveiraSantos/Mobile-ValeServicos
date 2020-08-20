@@ -7,7 +7,7 @@ import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
 
 const loginContratante = () => {
-  const [cpf, setCpf] = useState("");
+  const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
 
   const navigation = useNavigation();
@@ -27,16 +27,16 @@ const loginContratante = () => {
 
   async function handleLogin() {
     try {
-      const response = await api.post("sessioncontratante", {cpf, senha});
-      if (!response.data.cpf) {
+      const response = await api.post("sessioncontratante", {email, senha});
+      if (!response.data.email & !response.data.senha) {
         return erroLogin();
       } else {
-        AsyncStorage.setItem("cpf", cpf);
+        AsyncStorage.setItem("email", email);
         AsyncStorage.setItem("senha", senha);
         AsyncStorage.setItem("nome", response.data.nome);
         AsyncStorage.setItem("contratante", response.data)
         const contratante = response.data;
-        console.log(cpf, response.data);
+        console.log(email, response.data);
         return handleNavigateToHomeContratante(contratante);
       }
     } catch (err) {
@@ -70,18 +70,17 @@ const loginContratante = () => {
       <Text style={styles.text}>Login do Contratante</Text>
       <TextInput
         style={styles.input}
-        value={cpf}
-        keyboardType="number-pad"
-        onChangeText={setCpf}
-        maxLength={11}
+        value={email}
+        onChangeText={setEmail}
         autoCorrect={false}
-        placeholder="Digite seu CPF"
+        placeholder="Digite seu email"
       />
       <TextInput
         style={styles.input}
         value={senha}
         onChangeText={setSenha}
         autoCorrect={false}
+        secureTextEntry={true}
         placeholder="Digite sua senha"
       />
       <BaseButton style={styles.button} onPress={handleLogin}>

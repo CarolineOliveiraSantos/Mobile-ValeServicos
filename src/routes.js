@@ -24,10 +24,14 @@ import homeContratante from './pages/Contratante/Home';
 import Prestadoress from './pages/Contratante/Prestadores';
 import Detalhess from './pages/Contratante/Detalhe';
 import Avaliar from './pages/Contratante/Avaliar';
+import Avaliacaoo from './pages/Contratante/Avaliacao';
+import AllServicoss from './pages/Contratante/AllServicos';
 //VISITANTE
 import Principalll from './pages/Visitante/Principal';
 import Prestadores from './pages/Visitante/Prestadores/index';
 import Detalhes from './pages/Visitante/Detalhes/index';
+import AllServicos from './pages/Visitante/AllServicos/index';
+import Avaliacoes from './pages/Visitante/Avaliacao/index';
 
 
 export default function Routes(){
@@ -56,10 +60,14 @@ export default function Routes(){
         <AppStack.Screen name="Prestadoress" component={Prestadoress}/>
         <AppStack.Screen name="Detalhess" component={Detalhess}/>
         <AppStack.Screen name="Avaliar" component={Avaliar}/>
+        <AppStack.Screen name="Avaliacaoo" component={Avaliacaoo}/>
+        <AppStack.Screen name="AllServicoss" component={AllServicoss}/>
         {/* VISITANTE */}
         <AppStack.Screen name="Principalll" component={Principalll}/>
         <AppStack.Screen name="Prestadores" component={Prestadores}/>
         <AppStack.Screen name="Detalhes" component={Detalhes}/>
+        <AppStack.Screen name="AllServicos" component={AllServicos}/>
+        <AppStack.Screen name="Avaliacoes" component={Avaliacoes}/>
     </AppStack.Navigator>
 
     </NavigationContainer>

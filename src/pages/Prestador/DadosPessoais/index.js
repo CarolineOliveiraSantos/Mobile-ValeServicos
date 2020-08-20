@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, Alert } from "react-native";
+import { View, StyleSheet, Text, Alert, Image } from "react-native";
 import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
 
-  const DadosPessoais = () => {
+const DadosPessoais = () => {
   const navigation = useNavigation();
   const route = useRoute();
 
-  const prestadorCpf = route.params.prestador.cpf
+  const prestadorCpf = route.params.prestador.cpf;
 
   const [prestadores, setPrestadores] = useState([]);
-  console.log(prestadores)
+  // console.log(prestadsores)
 
   function handleNavigateToPrincipal() {
     navigation.goBack();
@@ -21,26 +21,27 @@ import api from "../../../services/api";
     navigation.navigate("Home");
   }
   function handleNavigateToAlterarDados(prestador) {
-    navigation.navigate("AlterarDados", {prestador});
+    navigation.navigate("AlterarDados", { prestador });
   }
 
-
   useEffect(() => {
-    api.get(`profile/${prestadorCpf}`, {
+    api
+      .get(`profile/${prestadorCpf}`, {
         headers: {
-            Authorization: prestadorCpf,
-        }
-    }).then(response => {
+          Authorization: prestadorCpf,
+        },
+      })
+      .then((response) => {
         setPrestadores(response.data);
-    })
-}, [prestadores]);
+      });
+  }, [prestadores]);
 
-const id = route.params.prestador.id
+  const id = route.params.prestador.id;
   async function handleDeleteAccount() {
     try {
       await api.delete(`prestadorApagar/${id}`);
       setPrestadores(prestadores.filter((prestador) => prestador.id !== id));
-      return navigation.navigate("Home")
+      return navigation.navigate("Home");
     } catch (err) {
       alert("Erro ao deletar prestador, tente novamente.");
     }
@@ -57,7 +58,9 @@ const id = route.params.prestador.id
         },
         {
           text: "Excluir",
-          onPress: () => {return handleDeleteAccount()},
+          onPress: () => {
+            return handleDeleteAccount();
+          },
         },
       ],
       { cancelable: false }
@@ -82,7 +85,16 @@ const id = route.params.prestador.id
           <Text style={styles.title}>Dados Pessoais</Text>
 
           {prestadores.map((prestador) => (
-            <View keyExtractor={prestador => String(prestador.id) }>
+            <View keyExtractor={(prestador) => String(prestador.id)}>
+              <Image
+                style={styles.prestadorImage}
+                source={{
+                  uri: `http://192.168.42.110:3333/uploads/${prestador.img}`,
+                  // uri: prestador.image_url,
+                }}
+              />
+              <Text>{prestador.img} </Text>
+
               <Text style={[styles.data, { marginTop: 0 }]}>Nome:</Text>
               <Text style={styles.dataValue}>{prestador.nome}</Text>
               <Text style={styles.data}>E-mail:</Text>
@@ -105,19 +117,19 @@ const id = route.params.prestador.id
 
               <Text style={styles.data}>Referência:</Text>
               <Text style={styles.dataValue}>{prestador.referencia}</Text>
-           
-          <BaseButton style={styles.button}>
-            <Text style={styles.buttonText} onPress={() => createAlert()}>
-              Excluir conta
-            </Text>
-            <Text
-              style={styles.buttonText}
-              onPress={() => handleNavigateToAlterarDados(prestador)}
-            >
-              Editar
-            </Text>
-          </BaseButton>
-          </View>
+
+              <BaseButton style={styles.button}>
+                <Text style={styles.buttonText} onPress={() => createAlert()}>
+                  Excluir conta
+                </Text>
+                <Text
+                  style={styles.buttonText}
+                  onPress={() => handleNavigateToAlterarDados(prestador)}
+                >
+                  Editar
+                </Text>
+              </BaseButton>
+            </View>
           ))}
         </View>
       </ScrollView>
@@ -127,6 +139,13 @@ const id = route.params.prestador.id
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  prestadorImage: {
+    width: "100%",
+    height: 120,
+    resizeMode: "cover",
+    borderRadius: 10,
+    marginTop: 32,
   },
   header: {
     flex: 1,

@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { View, StyleSheet, Text, Linking } from 'react-native';
-import { BaseButton, ScrollView } from "react-native-gesture-handler";
+import { BaseButton, ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from '@expo/vector-icons';
+import { Feather } from "@expo/vector-icons";
 import { FontAwesome } from '@expo/vector-icons';
 import * as MailComposer from 'expo-mail-composer';
 import api from "../../../services/api";
@@ -12,11 +13,15 @@ const Detalhes = () => {
     const route = useRoute();
     const prestador = route.params.prestador;
     const servicoId = route.params.prestador.id;
-    const contratanteId = route.params.prestador.contratante_id;
-    const [avaliacoes, setAvaliacoes] = useState([]);
 
     function handleNavigateToPrestadores() {
         navigation.goBack()
+    }
+    function handleNavigateToAllServicos(prestador) {
+        navigation.navigate("AllServicos", {prestador})
+    }
+    function handleNavigateToAvaliacoes(prestador) {
+        navigation.navigate("Avaliacoes", {prestador})
     }
 
     api.get(`avaliacoes/${servicoId}`, {
@@ -44,14 +49,15 @@ const Detalhes = () => {
     return (
         <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
         <View style={styles.container}>
-            <Text style={[styles.header, { marginLeft: 10, marginStart: 10, marginTop: 10 }]} onPress={handleNavigateToPrestadores}>
-                <Text>
-                    <Icon name="arrow-left" size={30} color="#0426B0" />
-                </Text>
-            </Text>
+
+        <TouchableOpacity style={[styles.linkSection, {marginTop: 15}]} activeOpacity={1}>
+                <Feather name="arrow-left" size={30} color="#0426B0" onPress={() => handleNavigateToPrestadores(prestador)} />
+                <Text style={styles.linkText} onPress={() =>handleNavigateToAvaliacoes(prestador)}>Avaliações</Text>
+        </TouchableOpacity>
+
 
             <View>
-                <Text style={[{ fontWeight: "bold", fontSize: 20, marginTop: 5, marginBottom: 5, textAlign: 'center' }]}>
+                <Text style={[{ fontWeight: "bold", fontSize: 20, marginBottom: 5, textAlign: 'center' }]}>
                     Perfil do Prestador
             </Text>
             </View>
@@ -66,38 +72,32 @@ const Detalhes = () => {
             <View style={styles.descriptionContainer}>
                 <Text style={styles.description}>Nome:</Text>
                 <Text style={styles.dataValue}>{prestador.nome}</Text>
+                <Text style={styles.description}>Referência de Trabalho:</Text>
+                <Text style={styles.dataValue}>{prestador.referencia}</Text>
+                <Text style={styles.description}>Cidade:</Text>
+                <Text style={styles.dataValue}>{prestador.city}/{prestador.uf}</Text>
+                <Text style={[styles.description, {textAlign: "center", fontSize: 17}]}>Informações do Serviço</Text>
                 <Text style={styles.description}>Tipo de Trabalho:</Text>
                 <Text style={styles.dataValue}>{prestador.sobre}</Text>
                 <Text style={[styles.description]}>Descrição do Serviço:</Text>
                 <Text style={styles.dataValue}>{prestador.descricao}</Text>
-                <Text style={styles.description}>Referência:</Text>
-                <Text style={styles.dataValue}>{prestador.referencia}</Text>
-                <Text style={styles.description}>Cidade:</Text>
-                <Text style={styles.dataValue}>{prestador.city}/{prestador.uf}</Text>
+                
+            </View>
 
-                <BaseButton style={styles.button} onPress={sendMail}>
+            <TouchableOpacity style={styles.linkSection} onPress={() => handleNavigateToAllServicos(prestador)}>
+                <Text style={styles.linkText}>Outros serviços deste prestador</Text>
+                <Feather name="arrow-right" size={30} color="#0426B0" />
+              </TouchableOpacity>
+
+
+            <TouchableOpacity activeOpacity={1} style={styles.button} onPress={sendMail}>
                     <Text style={styles.buttonText}>
                         Email
                 </Text>
                     <Text style={styles.buttonText} onPress={sendWhatsapp}>
                         WhatsApp
                 </Text>
-                </BaseButton>
-            </View>
-
-            <Text style={styles.text}>
-                Avaliações deste serviço:
-            </Text>  
-
-            {avaliacoes.map((avaliacao) => (
-                <View keyExtractor={(avaliacao) => String(avaliacao.id)}>
-                    <View style={styles.descriptionContainerr}>
-                        <Text style={styles.descriptionn}>Avaliador: <Text style={styles.dataValuee}>{prestador.nome}</Text></Text>
-                        <Text style={styles.descriptionn}>Nota: <Text style={styles.dataValuee}>{avaliacao.nota}</Text></Text>
-                        <Text style={styles.descriptionn}>Comentário: <Text style={styles.dataValuee}>{avaliacao.comentario}</Text></Text>
-                    </View>
-                </View>
-            ))}
+            </TouchableOpacity>
 
         </View>
         </ScrollView>
@@ -107,50 +107,9 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    descriptionn: {
-        paddingHorizontal: 10,
-        fontSize: 16,
-        flexDirection: "row",
-        color: "black",
-        marginBottom: 3
-      },
-      dataValuee: {
-        flexDirection: "row",
-        paddingHorizontal: 10,
-        fontSize: 16,
-        marginBottom: 10,
-        color: "black",
-        fontWeight: "bold",
-        paddingEnd: 20,
-        paddingStart: 20
-      },
-    text: {
-        fontSize: 18,
-        fontWeight: "bold",
-        color: "rgba(4, 38, 176, 1)",
-        paddingEnd: 20,
-        paddingStart: 20,
-        marginBottom: 10
-    },
-    textText: {
-        flexDirection: "column",
-        fontWeight: "bold",
-    },
     descriptionContainer: {
         justifyContent: "space-between",
         paddingHorizontal: 5,
-    },
-    descriptionContainerr: {
-        paddingTop: 10,
-        paddingBottom: 10,
-        justifyContent: "space-between",
-        marginStart: 10,
-        marginEnd: 10,
-        backgroundColor: "rgba(4, 38, 176, 0.3)",
-        marginBottom: 15,
-        paddingHorizontal: 5,
-        color: "#41414d",
-        borderRadius: 5,
     },
     icon: {
         flex: 1,
@@ -193,6 +152,20 @@ const styles = StyleSheet.create({
         borderRadius: 5,
         textAlign: 'center',
         paddingTop: 12
-    }
+    },
+    linkSection: {
+        flexDirection: "row",
+        justifyContent: "space-between",
+        alignItems: "center",
+        marginBottom: 15,
+        marginStart: 10,
+        marginEnd: 10,
+      },
+      linkText: {
+        fontWeight: "bold",
+        fontSize: 18,
+        paddingHorizontal: 10,
+        color: "#0426B0",
+      }
 })
 export default Detalhes;
