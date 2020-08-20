@@ -86,15 +86,6 @@ const DadosPessoais = () => {
 
           {prestadores.map((prestador) => (
             <View keyExtractor={(prestador) => String(prestador.id)}>
-              <Image
-                style={styles.prestadorImage}
-                source={{
-                  uri: `http://192.168.42.110:3333/uploads/${prestador.img}`,
-                  // uri: prestador.image_url,
-                }}
-              />
-              <Text>{prestador.img} </Text>
-
               <Text style={[styles.data, { marginTop: 0 }]}>Nome:</Text>
               <Text style={styles.dataValue}>{prestador.nome}</Text>
               <Text style={styles.data}>E-mail:</Text>

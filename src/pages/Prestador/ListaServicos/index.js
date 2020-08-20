@@ -45,8 +45,7 @@ const ListaServicos = () => {
                     {servicos.map((servico) => (
                         <View style={styles.dataContainer} keyExtractor={servico => String(servico.id)}>
                             {/* <Text style={styles.dataValue}>{servico.imagem}</Text> */}
-                            <Text style={styles.dataValue}>Imagem</Text>
-                            <Text style={styles.dataValue}>{servico.descricao}</Text>
+                            <Text style={styles.dataValue}>{servico.name}</Text>
                             <Text style={styles.dataValue} onPress={() => handleNavigateToVerServicos(servico, prestador)}>
                                 <AntDesign name="arrowright" size={26} color="black" />
                             </Text>
