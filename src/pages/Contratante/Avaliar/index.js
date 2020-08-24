@@ -1,10 +1,11 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect } from 'react';
 import { View, Text, StyleSheet, TextInput } from 'react-native';
 import { Entypo } from '@expo/vector-icons';
 import { useNavigation, useRoute } from '@react-navigation/native';
 import { Feather as Icon } from '@expo/vector-icons';
 import {RectButton, ScrollView, TouchableOpacity} from 'react-native-gesture-handler';
-import { AntDesign } from '@expo/vector-icons'; 
+import { AntDesign } from '@expo/vector-icons';
+import { Rating, AirbnbRating } from 'react-native-ratings';
 import api from "../../../services/api";
 
 const Avaliar = () => {
@@ -56,7 +57,7 @@ const Avaliar = () => {
                     <Entypo name="emoji-neutral" size={30} color="#0426B0" />
                     <Entypo name="emoji-happy" size={30} color="#0426B0" />
                 </View>
-                <TextInput style={styles.input} value={nota} onChangeText={setNota} maxLength={1} keyboardType="number-pad"  placeholder="Faça a sua avaliação" />
+               <TextInput style={styles.input} value={nota} onChangeText={setNota} maxLength={1} keyboardType="number-pad"  placeholder="Faça a sua avaliação" />
                 <TextInput style={[styles.input, {height: 80}]} value={comentario} onChangeText={setComentario} placeholder="Comentário" />
 
                 <RectButton style={[styles.button, {marginStart: 20, marginEnd: 20}]}>

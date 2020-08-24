@@ -5,6 +5,7 @@ import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
 import { Entypo } from '@expo/vector-icons';
 import SvgUri from "expo-svg-uri";
+import { AntDesign } from '@expo/vector-icons'; 
 
 const homeContratante = () => {
     const navigation = useNavigation();
@@ -16,6 +17,9 @@ const homeContratante = () => {
     }
     function handleNavigateToPrestadores(servico, contratante) {
         navigation.navigate("Prestadoress", { servico, contratante });
+    }
+    function handleNavigateToDadosPessoais(contratante) {
+        navigation.navigate("DadosPessoaiss", { contratante });
     }
 
     const [servicos, setServicos] = useState([]);
@@ -35,11 +39,16 @@ const homeContratante = () => {
                             <Icon name="arrow-left" size={30} color="#0426B0" />
                         </Text>
                     </Text>
-                    <View style={styles.searchSection}>
-                        <Text style={[{ fontWeight: "bold", fontSize: 20, marginTop: 5, marginLeft: 60 }]}>
+                    {/* <View style={styles.searchSection}> */}
+                        <Text style={[{ fontWeight: "bold", fontSize: 20, marginTop: 5, }]}>
                             Área do Contratante
                         </Text>
-                    </View>
+                    {/* </View> */}
+                    {/* <View style={styles.searchSection}> */}
+                        <Text style={[{marginTop: 5, paddingRight: 10}]} onPress={() =>handleNavigateToDadosPessoais(contratante)}>
+                            <AntDesign name="solution1" size={30} color="#0426B0" />
+                        </Text>
+                    {/* </View> */}
                 </View>
                 {servicos.map((servico) => (
                     <TouchableOpacity

@@ -21,6 +21,8 @@ import loginContratante from './pages/Contratante/Login';
 import cadastroContratante from './pages/Contratante/Cadastro';
 import RecuperarAcessoo from './pages/Contratante/RecuperarAcesso';
 import homeContratante from './pages/Contratante/Home';
+import DadosPessoaiss from './pages/Contratante/DadosPessoais';
+import AlterarDadoss from './pages/Contratante/AlterarDados';
 import Prestadoress from './pages/Contratante/Prestadores';
 import Detalhess from './pages/Contratante/Detalhe';
 import Avaliar from './pages/Contratante/Avaliar';
@@ -57,6 +59,8 @@ export default function Routes(){
         <AppStack.Screen name="cadastroContratante" component={cadastroContratante}/>
         <AppStack.Screen name="RecuperarAcessoo" component={RecuperarAcessoo}/>
         <AppStack.Screen name="homeContratante" component={homeContratante}/>
+        <AppStack.Screen name="DadosPessoaiss" component={DadosPessoaiss}/>
+        <AppStack.Screen name="AlterarDadoss" component={AlterarDadoss}/>
         <AppStack.Screen name="Prestadoress" component={Prestadoress}/>
         <AppStack.Screen name="Detalhess" component={Detalhess}/>
         <AppStack.Screen name="Avaliar" component={Avaliar}/>

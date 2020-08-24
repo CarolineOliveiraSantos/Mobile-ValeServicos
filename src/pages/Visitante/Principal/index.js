@@ -34,7 +34,7 @@ const Principalll = () => {
                         </Text>
                     </Text>
                     <View style={styles.searchSection}>
-                        <Text style={[{ fontWeight: "bold", fontSize: 20, marginTop: 5, marginLeft: 60 }]}>
+                        <Text style={[{ fontWeight: "bold", fontSize: 20, marginTop: 5, marginLeft: 80 }]}>
                             Área do Visitante
                         </Text>
                     </View>
