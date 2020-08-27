@@ -74,12 +74,12 @@ const AlterarServicos = () => {
         {servicos.map((servico) => (
           <View keyExtractor={(servico) => String(servico.id)}>
             <Text style={styles.textText}>Imagem</Text>
-            <TextInput
+            {/* <TextInput
               style={styles.input}
               onChangeText={setImg_url}
               placeholder={servico.img_url}
               placeholderTextColor="#000"
-            />
+            /> */}
             <Text style={styles.textText}>Tipo de Serviço:</Text>
             <TextInput
               style={styles.input}

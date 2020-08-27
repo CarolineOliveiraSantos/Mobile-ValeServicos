@@ -122,12 +122,12 @@ const Cadastro = () => {
         />
         {/* // como arquivo */}
 
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           value={img}
           onChangeText={setImg}
           placeholder="imagem"
-        />
+        /> */}
         <BaseButton style={styles.button} onPress={handleRegister}>
           <Text style={styles.buttonText}>Finalizar cadastro</Text>
         </BaseButton>

@@ -79,12 +79,12 @@ const AdServicos = () => {
         </Text>
         <Text style={styles.text}>Novo Serviço</Text>
 
-        <TextInput
+        {/* <TextInput
           style={styles.input}
           value={img_url}
           onChangeText={setImg_url}
           placeholder="Imagem"
-        />
+        /> */}
         {/* <TextInput
           style={styles.input}
           value={servicos}

@@ -79,9 +79,9 @@ const VerServicos = () => {
                 <Text style={styles.title}>Serviço</Text>
                 
                 <View style={styles.descriptionContainer}>
-                <Text style={[styles.description, {marginTop: 7}]}>Imagem:</Text>
-                <Text style={styles.dataValue}>Não tem imagem</Text>
-                <Text style={styles.description}>Serviço:</Text>
+                {/* <Text style={[styles.description, {marginTop: 7}]}>Imagem:</Text>
+                <Text style={styles.dataValue}>Não tem imagem</Text> */}
+                <Text style={[styles.description, {marginTop: 7}]}>Serviço:</Text>
                 <Text style={styles.dataValue}>{servico.name}</Text>
                 <Text style={styles.description}>Descrição do Serviço:</Text>
                 <Text style={styles.dataValue}>{servico.descricao}</Text>
