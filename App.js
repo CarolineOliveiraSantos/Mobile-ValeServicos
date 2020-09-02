@@ -3,10 +3,12 @@ import {AppLoading} from 'expo';
 import { StatusBar } from 'react-native';
 import {Roboto_400Regular, Roboto_500Medium} from '@expo-google-fonts/roboto';
 import {Ubuntu_700Bold, useFonts} from '@expo-google-fonts/ubuntu';
+import {YellowBox} from 'react-native';
 
 import Routes from './src/routes';
 
 export default function App() {
+
   const [fontsLoaded] = useFonts({
     Roboto_400Regular,
     Roboto_500Medium,
@@ -16,7 +18,8 @@ export default function App() {
   if(!fontsLoaded) {
     return <AppLoading/>
   }
-
+  YellowBox.ignoreWarnings(['Warning: ReactNative.createElement']);
+  console.disableYellowBox = true;
   return (
     <>
     <StatusBar barStyle="dark-content" backgroundColor="transparent"/>
