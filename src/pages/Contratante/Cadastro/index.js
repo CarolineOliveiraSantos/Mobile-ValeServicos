@@ -18,13 +18,13 @@ const cadastroContratante = () => {
 
   async function handleRegister() {
     const data = {
-        cpf,
-        nome,
-        email,
-        senha,
-        telefone,
-        city,
-        uf
+      cpf,
+      nome,
+      email,
+      senha,
+      telefone,
+      city,
+      uf,
     };
 
     try {
@@ -57,6 +57,20 @@ const cadastroContratante = () => {
           </Text>
         </View>
         <Text style={styles.text}>Cadastro do Contratante</Text>
+        <Text
+          style={[
+            styles.description,
+            {
+              textAlign: "center",
+              backgroundColor: "rgba(4, 38, 176, 0.3)",
+              marginBottom: 19,
+              // marginTop: 5,
+              marginLeft: 20,
+              marginRight: 20,
+              fontSize: 4,
+            },
+          ]}
+        ></Text>
         <TextInput
           style={styles.input}
           value={nome}
@@ -100,7 +114,7 @@ const cadastroContratante = () => {
           autoCorrect={false}
           placeholder="Digite sua cidade"
         />
-       
+
         <BaseButton style={styles.button} onPress={handleRegister}>
           <Text style={styles.buttonText}>Finalizar cadastro</Text>
         </BaseButton>

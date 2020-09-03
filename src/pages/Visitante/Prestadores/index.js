@@ -45,29 +45,42 @@ const Prestadores = () => {
     setPrestadores(response.data);
   });
 
-
   return (
-    <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
-      <View style={styles.container}>
-        <Text
-          style={[
-            styles.header,
-            { marginLeft: 10, marginStart: 10, marginTop: 10 },
-          ]}
-          onPress={handleNavigateToPrincipall}
-        >
-          <Text>
-            <Icon name="arrow-left" size={30} color="#0426B0" />
-          </Text>
+    <View style={styles.container}>
+      <Text
+        style={[
+          styles.header,
+          { marginLeft: 10, marginStart: 10, marginTop: 10 },
+        ]}
+        onPress={handleNavigateToPrincipall}
+      >
+        <Text>
+          <Icon name="arrow-left" size={30} color="#0426B0" />
         </Text>
-        <Text style={[styles.title, { marginStart: 25, marginEnd: 25 }]}>
-          Prestadores de Serviço
-        </Text>
+      </Text>
+      <Text style={[styles.title, { marginStart: 25, marginEnd: 25 }]}>
+        Prestadores de Serviço
+      </Text>
 
-        <Text style={styles.headerText}>
-          Total de <Text style={styles.headerTextText}>{total} prestadores</Text>
-        </Text>
+      <Text style={styles.headerText}>
+        Total de <Text style={styles.headerTextText}>{total} prestadores</Text>
+      </Text>
 
+      <Text
+        style={[
+          // styles.description,
+          {
+            textAlign: "center",
+            backgroundColor: "rgba(4, 38, 176, 0.5)",
+            marginBottom: 15,
+            // marginTop: 5,
+            marginLeft: 190,
+            marginRight: 11,
+            fontSize: 4,
+          },
+        ]}
+      ></Text>
+      <ScrollView showsVerticalScrollIndicator={false} horizontal={false}>
         {prestadores.map((prestador) => (
           <View keyExtractor={(prestador) => String(prestador.id)}>
             <View style={styles.descriptionContainer}>
@@ -78,16 +91,18 @@ const Prestadores = () => {
               <Text style={[styles.description]}>Telefone:</Text>
               <Text style={styles.dataValue}>{prestador.telefone}</Text>
 
-              <TouchableOpacity style={styles.linkSection} onPress={() => handleNavigateToDetalhes(prestador)}>
+              <TouchableOpacity
+                style={styles.linkSection}
+                onPress={() => handleNavigateToDetalhes(prestador)}
+              >
                 <Text style={styles.linkText}>Ver mais</Text>
                 <Feather name="arrow-right" size={30} color="#0426B0" />
               </TouchableOpacity>
-
             </View>
           </View>
         ))}
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </View>
   );
 };
 const styles = StyleSheet.create({
@@ -96,9 +111,9 @@ const styles = StyleSheet.create({
   },
   headerText: {
     fontSize: 16,
-    color: '#737380',
-    textAlign: 'right',
-    marginEnd: 15
+    color: "#737380",
+    textAlign: "right",
+    marginEnd: 15,
   },
   headerTextText: {
     fontWeight: "bold",
@@ -151,6 +166,6 @@ const styles = StyleSheet.create({
     fontSize: 18,
     paddingHorizontal: 10,
     color: "#0426B0",
-  }
+  },
 });
 export default Prestadores;

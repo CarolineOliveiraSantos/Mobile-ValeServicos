@@ -47,7 +47,7 @@ const AllServicos = () => {
                     <View keyExtractor={(prestador) => String(prestador.id)}>
                         <View style={styles.descriptionContainer}>
                             <Text style={[styles.description, {marginTop: 10}]}>Tipo de Trabalho:</Text>
-                            <Text style={styles.dataValue}>Tem que colocar o tipo de trabalho</Text>
+                            <Text style={styles.dataValue}>{prestador.name}</Text>
                             <Text style={[styles.description]}>Serviço:</Text>
                             <Text style={styles.dataValue}>{prestador.descricao}</Text>
 

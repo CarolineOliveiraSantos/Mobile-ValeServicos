@@ -69,6 +69,21 @@ const Login = () => {
         </Text>
       </View>
       <Text style={styles.text}>Login do Prestador</Text>
+
+      <Text
+        style={[
+          // styles.description,
+          {
+            textAlign: "center",
+            backgroundColor: "rgba(4, 38, 176, 0.3)",
+            marginBottom: 15,
+            // marginTop: 5,
+            marginLeft: 20,
+            marginRight: 20,
+            fontSize: 4,
+          },
+        ]}
+      ></Text>
       <TextInput
         style={styles.input}
         value={email}
@@ -91,7 +106,10 @@ const Login = () => {
         <Text style={{ fontSize: 16 }} onPress={handleNavigateToCadastro}>
           Cadastre-se
         </Text>
-        <Text style={{ fontSize: 16 }} onPress={handleNavigateToRecuperarAcesso}>
+        <Text
+          style={{ fontSize: 16 }}
+          onPress={handleNavigateToRecuperarAcesso}
+        >
           Esqueceu a senha?
         </Text>
       </View>

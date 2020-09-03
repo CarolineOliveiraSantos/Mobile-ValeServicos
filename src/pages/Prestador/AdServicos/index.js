@@ -1,17 +1,23 @@
 import React, { useState, useEffect } from "react";
-import { View, StyleSheet, Text, TextInput, TouchableOpacity } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  TextInput,
+  TouchableOpacity,
+} from "react-native";
 import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
 import SvgUri from "expo-svg-uri";
+import { Entypo } from "@expo/vector-icons";
+
 const AdServicos = () => {
-  
   const navigation = useNavigation();
   const route = useRoute();
   const prestadorIdd = route.params.prestador.id;
   const prestador = route.params.prestador;
-
 
   function handleNavigateToListaServicos(prestador) {
     navigation.navigate("ListaServicos", { prestador });
@@ -77,20 +83,28 @@ const AdServicos = () => {
             <Icon name="arrow-left" size={30} color="#0426B0" />
           </Text>
         </Text>
+        <Text style={styles.buttonIcon1}>
+          <Entypo name="add-to-list" size={70} color="rgba(4, 38, 176, 0.8)" />
+        </Text>
         <Text style={styles.text}>Novo Serviço</Text>
+        <Text
+          style={[
+            // styles.description,
+            {
+              textAlign: "center",
+              backgroundColor: "rgba(4, 38, 176, 0.8)",
+              marginBottom: 5,
+              // marginTop: 5,
+              marginLeft: 20,
+              marginRight: 20,
+              fontSize: 4,
+            },
+          ]}
+        ></Text>
+        <Text style={[styles.data, { marginBottom: 9 }]}>
+          Qual a categoria do serviço?
+        </Text>
 
-        {/* <TextInput
-          style={styles.input}
-          value={img_url}
-          onChangeText={setImg_url}
-          placeholder="Imagem"
-        /> */}
-        {/* <TextInput
-          style={styles.input}
-          value={servicos}
-          onChangeText={setServicos}
-          placeholder="Tipo de serviço"
-        /> */}
         <ScrollView
           horizontal
           showsHorizontalScrollIndicator={false}
@@ -111,19 +125,39 @@ const AdServicos = () => {
                 width={42}
                 height={42}
                 source={{
-                  // uri: `http://192.168.42.110:3333/uploadsServs/${servico.img}`,
-                  uri: item.image_url,
-                }}    />
+                  uri: `http://192.168.1.8:3333/uploadsServs/${item.img}`,
+                  // uri: item.image_url,
+                }}
+              />
               <Text style={styles.itemTitle}>{item.name}</Text>
             </TouchableOpacity>
           ))}
         </ScrollView>
+        <Text
+          style={[
+            // styles.description,
+            {
+              textAlign: "center",
+              backgroundColor: "rgba(4, 38, 176, 0.8)",
+              marginBottom: 15,
+              // marginTop: 5,
+              marginLeft: 20,
+              marginRight: 20,
+              fontSize: 4,
+            },
+          ]}
+        ></Text>
+        <Text style={[styles.data, { marginBottom: 9 }]}>
+          Descreva seu serviços
+        </Text>
+
         <TextInput
           style={styles.input}
           value={descricao}
           onChangeText={setDescricao}
-          placeholder="Descreva seu serviços"
+          placeholder="Ex.: Faço comida."
         />
+
         <BaseButton style={styles.button} onPress={handleAddServico}>
           <Text style={styles.buttonText}>Salvar</Text>
         </BaseButton>
@@ -138,6 +172,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     padding: 10,
+  },
+
+  buttonIcon1: {
+    alignItems: "center",
+    marginBottom: 7,
+    textAlign: "center",
   },
   header: {
     flex: 1,
@@ -161,7 +201,12 @@ const styles = StyleSheet.create({
 
     textAlign: "center",
   },
-
+  data: {
+    paddingHorizontal: 24,
+    fontSize: 16,
+    color: "black",
+    fontWeight: "bold",
+  },
   selectedItem: {
     borderColor: "#0426B0",
     borderWidth: 2,

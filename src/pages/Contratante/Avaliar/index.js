@@ -12,6 +12,7 @@ import { AntDesign } from "@expo/vector-icons";
 import { Rating, AirbnbRating } from "react-native-ratings";
 import api from "../../../services/api";
 import { color } from "react-native-reanimated";
+// import { Feather } from "@expo/vector-icons";
 
 const Avaliar = () => {
   const navigation = useNavigation();
@@ -26,7 +27,7 @@ const Avaliar = () => {
   function ratingCompleted(rating) {
     // console.log("Rating is: " + rating);
     setStart(rating);
-    console.log(start);
+    // console.log(start);
   }
   // console.log(prestadores);
   const [nota, setNota] = useState("");
@@ -65,7 +66,26 @@ const Avaliar = () => {
             <Icon name="arrow-left" size={30} color="#0426B0" />
           </Text>
         </Text>
+
+        <Text style={styles.buttonIcon1}>
+          <Icon name="star" size={70} color="rgba(4, 38, 176, 0.8)" />
+        </Text>
+
         <Text style={[styles.title]}>Avaliação</Text>
+        <Text
+          style={[
+            styles.description,
+            {
+              textAlign: "center",
+              backgroundColor: "rgba(4, 38, 176, 0.5)",
+              marginBottom: 9,
+              // marginTop: 25,
+              marginLeft: 20,
+              marginRight: 20,
+              fontSize: 4,
+            },
+          ]}
+        ></Text>
         <View>
           <Text style={styles.description}>Avalie o serviço de 0 a 5</Text>
         </View>
@@ -74,7 +94,7 @@ const Avaliar = () => {
           <Entypo name="emoji-neutral" size={30} color="#0426B0" />
           <Entypo name="emoji-happy" size={30} color="#0426B0" />
         </View> */}
-        <AirbnbRating 
+        <AirbnbRating
           count={5}
           reviews={["Nota 1", "Nota 2", "Nota 3", "Nota 4", "Nota 5"]}
           defaultRating={1}
@@ -82,14 +102,7 @@ const Avaliar = () => {
           onFinishRating={ratingCompleted}
           value={start}
         />
-        {/* <TextInput
-          style={styles.input}
-          value={nota}
-          onChangeText={setNota}
-          maxLength={1}
-          keyboardType="number-pad"
-          placeholder="Faça a sua avaliação"
-        /> */}
+
         <TextInput
           style={[styles.input, { height: 80, marginTop: 15 }]}
           value={comentario}
@@ -127,6 +140,11 @@ const styles = StyleSheet.create({
     paddingEnd: 70,
     paddingStart: 70,
   },
+  buttonIcon1: {
+    alignItems: "center",
+    marginBottom: 7,
+    textAlign: "center",
+  },
   title: {
     fontSize: 22,
     marginBottom: 10,
@@ -136,14 +154,14 @@ const styles = StyleSheet.create({
   },
   description: {
     fontSize: 18,
-    marginBottom: 10,
+    marginBottom: 8,
     color: "#13131a",
     textAlign: "center",
   },
   input: {
     marginLeft: 20,
     marginRight: 20,
-    height: 60,
+    // height: 90,
     backgroundColor: "#FFF",
     borderRadius: 10,
     marginBottom: 8,

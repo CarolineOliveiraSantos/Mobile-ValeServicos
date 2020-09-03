@@ -4,6 +4,7 @@ import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
+import { AntDesign } from "@expo/vector-icons";
 
 const AlterarServicos = () => {
   const navigation = useNavigation();
@@ -70,23 +71,28 @@ const AlterarServicos = () => {
             <Icon name="arrow-left" size={30} color="#0426B0" />
           </Text>
         </Text>
+
+        <Text style={styles.buttonIcon1}>
+          <AntDesign name="edit" size={70} color="rgba(4, 38, 176, 0.8)" />
+        </Text>
         <Text style={styles.text}>Editar Serviço</Text>
+
+        <Text
+          style={[
+            // styles.description,
+            {
+              textAlign: "center",
+              backgroundColor: "rgba(4, 38, 176, 0.3)",
+              marginBottom: 15,
+              // marginTop: 5,
+              marginLeft: 20,
+              marginRight: 20,
+              fontSize: 4,
+            },
+          ]}
+        ></Text>
         {servicos.map((servico) => (
           <View keyExtractor={(servico) => String(servico.id)}>
-            <Text style={styles.textText}>Imagem</Text>
-            {/* <TextInput
-              style={styles.input}
-              onChangeText={setImg_url}
-              placeholder={servico.img_url}
-              placeholderTextColor="#000"
-            /> */}
-            <Text style={styles.textText}>Tipo de Serviço:</Text>
-            <TextInput
-              style={styles.input}
-              editable={false}
-              placeholder={servico.name}
-              placeholderTextColor="#000"
-            />
             <Text style={styles.textText}>Descrição do Serviço:</Text>
             <TextInput
               style={styles.input}
@@ -117,8 +123,10 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   textText: {
-    marginStart: 10,
+    marginStart: 12,
+    marginBottom: 9,
     fontSize: 16,
+
     fontWeight: "bold",
   },
   text: {
@@ -130,6 +138,12 @@ const styles = StyleSheet.create({
   buttonIcon: {
     alignItems: "center",
     marginBottom: 7,
+  },
+
+  buttonIcon1: {
+    alignItems: "center",
+    marginBottom: 7,
+    textAlign: "center",
   },
   input: {
     marginStart: 10,

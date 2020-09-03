@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Alert, Image } from "react-native";
 import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
+import { FontAwesome5 } from "@expo/vector-icons";
 import api from "../../../services/api";
 
 const DadosPessoais = () => {
@@ -81,34 +82,92 @@ const DadosPessoais = () => {
               <Icon name="arrow-left" size={30} color="#0426B0" />
             </Text>
           </Text>
+          <View style={styles.buttonIcon}>
+            <Text>
+              <FontAwesome5 name="user-circle" size={70} color="#0426B0" />
+            </Text>
+          </View>
 
           <Text style={styles.title}>Dados Pessoais</Text>
+          <Text
+            style={[
+              // styles.description,
+              {
+                textAlign: "center",
+                backgroundColor: "rgba(4, 38, 176, 0.3)",
+                marginBottom: 12,
+                // marginTop: 5,
+                marginLeft: 20,
+                marginRight: 20,
+                fontSize: 4,
+              },
+            ]}
+          ></Text>
 
           {prestadores.map((prestador) => (
             <View keyExtractor={(prestador) => String(prestador.id)}>
-              <Text style={[styles.data, { marginTop: 0 }]}>Nome:</Text>
+              <Text style={[styles.data, { marginTop: 0 }]}>Nome</Text>
               <Text style={styles.dataValue}>{prestador.nome}</Text>
-              <Text style={styles.data}>E-mail:</Text>
+              <Text style={styles.data}>E-mail</Text>
               <Text style={styles.dataValue}>{prestador.email}</Text>
 
-              <Text style={styles.data}>CPF:</Text>
+              <Text style={styles.data}>CPF</Text>
               <Text style={styles.dataValue}>{prestador.cpf}</Text>
 
-              <Text style={styles.data}>Telefone:</Text>
+              <Text style={styles.data}>Telefone</Text>
               <Text style={styles.dataValue}>{prestador.telefone}</Text>
 
-              <Text style={styles.data}>Cidade:</Text>
-              <Text style={styles.dataValue}>
-                {prestador.city}/{prestador.uf}
-              </Text>
+              <Text style={styles.data}>Cidade/UF</Text>
+              <Text style={styles.dataValue}>{prestador.city}/MS</Text>
+              {/* <Text
+                style={[
+                  // styles.description,
+                  {
+                    textAlign: "center",
+                    backgroundColor: "rgba(4, 38, 176, 0.3)",
+                    marginBottom: 15,
+                    // marginTop: 5,
+                    marginLeft: 20,
+                    marginRight: 20,
+                    fontSize: 4,
+                  },
+                ]}
+              ></Text> */}
 
               <Text style={styles.title}>Dados Gerais</Text>
-              <Text style={styles.data}>Sobre você:</Text>
+              <Text
+                style={[
+                  // styles.description,
+                  {
+                    textAlign: "center",
+                    backgroundColor: "rgba(4, 38, 176, 0.3)",
+                    marginBottom: 19,
+                    // marginTop: 5,
+                    marginLeft: 20,
+                    marginRight: 20,
+                    fontSize: 4,
+                  },
+                ]}
+              ></Text>
+              <Text style={styles.data}>Sobre você</Text>
               <Text style={styles.dataValue}>{prestador.sobre}</Text>
 
-              <Text style={styles.data}>Referência:</Text>
+              <Text style={styles.data}>Referência</Text>
               <Text style={styles.dataValue}>{prestador.referencia}</Text>
-
+              {/* <Text
+                style={[
+                  // styles.description,
+                  {
+                    textAlign: "center",
+                    backgroundColor: "rgba(4, 38, 176, 0.3)",
+                    marginBottom: 15,
+                    // marginTop: 5,
+                    marginLeft: 20,
+                    marginRight: 20,
+                    fontSize: 4,
+                  },
+                ]}
+              ></Text> */}
               <BaseButton style={styles.button}>
                 <Text style={styles.buttonText} onPress={() => createAlert()}>
                   Excluir conta
@@ -149,6 +208,10 @@ const styles = StyleSheet.create({
     color: "#13131a",
     fontWeight: "bold",
     textAlign: "center",
+  },
+  buttonIcon: {
+    alignItems: "center",
+    marginBottom: 7,
   },
   data: {
     paddingHorizontal: 24,

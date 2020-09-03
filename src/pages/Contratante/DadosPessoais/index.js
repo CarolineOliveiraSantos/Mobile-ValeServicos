@@ -4,6 +4,7 @@ import { BaseButton, ScrollView } from "react-native-gesture-handler";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { Feather as Icon } from "@expo/vector-icons";
 import api from "../../../services/api";
+import { FontAwesome5 } from "@expo/vector-icons";
 
 const DadosPessoaiss = () => {
   const navigation = useNavigation();
@@ -24,7 +25,8 @@ const DadosPessoaiss = () => {
   }
 
   useEffect(() => {
-    api.get(`profilec/${contratanteCpf}`, {
+    api
+      .get(`profilec/${contratanteCpf}`, {
         headers: {
           Authorization: contratanteCpf,
         },
@@ -38,7 +40,9 @@ const DadosPessoaiss = () => {
   async function handleDeleteAccount() {
     try {
       await api.delete(`contratanteApagar/${id}`);
-      setContratantes(contratantes.filter((contratante) => contratante.id !== id));
+      setContratantes(
+        contratantes.filter((contratante) => contratante.id !== id)
+      );
       return navigation.navigate("Home");
     } catch (err) {
       alert("Erro ao deletar contratante, tente novamente.");
@@ -79,40 +83,71 @@ const DadosPessoaiss = () => {
               <Icon name="arrow-left" size={30} color="#0426B0" />
             </Text>
           </Text>
-
-          <Text style={styles.title}>Dados Pessoais</Text>
+          <View style={styles.buttonIcon}>
+            <Text>
+              <FontAwesome5 name="user-circle" size={70} color="#0426B0" />
+            </Text>
+          </View>
+          <Text style={styles.title}>Dados Pessoais - Contratante</Text>
+          <Text
+            style={[
+              styles.description,
+              {
+                textAlign: "center",
+                backgroundColor: "rgba(4, 38, 176, 0.3)",
+                marginBottom: 15,
+                // marginTop: 25,
+                marginLeft: 20,
+                marginRight: 20,
+                fontSize: 4,
+              },
+            ]}
+          ></Text>
 
           {contratantes.map((contratante) => (
             <View keyExtractor={(contratante) => String(contratante.id)}>
-              <Text style={[styles.data, { marginTop: 0 }]}>Nome:</Text>
+              <Text style={[styles.data, { marginTop: 0 }]}>Nome</Text>
               <Text style={styles.dataValue}>{contratante.nome}</Text>
 
-              <Text style={styles.data}>E-mail:</Text>
+              <Text style={styles.data}>E-mail</Text>
               <Text style={styles.dataValue}>{contratante.email}</Text>
 
-              <Text style={styles.data}>CPF:</Text>
+              <Text style={styles.data}>CPF</Text>
               <Text style={styles.dataValue}>{contratante.cpf}</Text>
 
-              <Text style={styles.data}>Telefone:</Text>
+              <Text style={styles.data}>Telefone</Text>
               <Text style={styles.dataValue}>{contratante.telefone}</Text>
 
-              <Text style={styles.data}>Cidade:</Text>
-              <Text style={styles.dataValue}>
-                {contratante.city}/{contratante.uf}
-              </Text>
+              <Text style={styles.data}>Cidade</Text>
+              <Text style={styles.dataValue}>{contratante.city}/MS</Text>
+           
 
-              <BaseButton style={styles.button}>
-                <Text style={styles.buttonText} onPress={() => createAlert()}>
-                  Excluir conta
-                </Text>
-                <Text
-                  style={styles.buttonText}
-                  onPress={() => handleNavigateToAlterarDados(contratante)}
-                >
-                  Editar
-                </Text>
-              </BaseButton>
-            </View>
+          {/* <Text
+            style={[
+              styles.description,
+              {
+                textAlign: "center",
+                backgroundColor: "rgba(4, 38, 176, 0.3)",
+                marginBottom: 4,
+                // marginTop: 25,
+                marginLeft: 20,
+                marginRight: 20,
+                fontSize: 4,
+              },
+            ]}
+          ></Text> */}
+          <BaseButton style={styles.button}>
+            <Text style={styles.buttonText} onPress={() => createAlert()}>
+              Excluir conta
+            </Text>
+            <Text
+              style={styles.buttonText}
+              onPress={() => handleNavigateToAlterarDados(contratante)}
+            >
+              Editar
+            </Text>
+          </BaseButton>
+          </View>
           ))}
         </View>
       </ScrollView>
@@ -122,6 +157,10 @@ const DadosPessoaiss = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+  buttonIcon: {
+    alignItems: "center",
+    marginBottom: 7,
   },
   prestadorImage: {
     width: "100%",
@@ -155,12 +194,13 @@ const styles = StyleSheet.create({
     color: "black",
   },
   button: {
-    flex: 1,
+    // flex: 1,
+
     height: 50,
     flexDirection: "row",
     justifyContent: "space-between",
     fontSize: 15,
-    marginBottom: 15,
+    marginTop: 15,
     paddingEnd: 20,
     paddingStart: 20,
   },

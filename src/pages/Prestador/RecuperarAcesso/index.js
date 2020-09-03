@@ -42,30 +42,56 @@ const RecuperarAcesso = () => {
   
   return (
     <View style={styles.container}>
-       <Text style={[{ marginLeft: 10, marginStart: 10}]} onPress={handleNavigateToBack}>
-                <Text>
-                    <Icon name="arrow-left" size={30} color="#0426B0" />
-                </Text>
-              </Text>
+      <Text
+        style={[{ marginLeft: 10, marginStart: 10 }]}
+        onPress={handleNavigateToBack}
+      >
+        <Text>
+          <Icon name="arrow-left" size={30} color="#0426B0" />
+        </Text>
+      </Text>
       <View style={styles.buttonIcon}>
         <Text>
-        <FontAwesome5 name="user-circle" size={70} color="#0426B0" />
+          <FontAwesome5 name="user-circle" size={70} color="#0426B0" />
         </Text>
       </View>
-        <Text  style={styles.text}>
-          Recuperar Acesso
-        </Text>
-      <TextInput style={styles.input} value={cpf} onChangeText={setCpf} keyboardType="number-pad" maxLength={11} autoCorrect={false} placeholder="Digite o seu CPF" />
-      <TextInput style={styles.input} value={senha} onChangeText={setSenha} autoCorrect={false} placeholder="Digite uma nova senha" />
+      <Text style={styles.text}>Recuperar Acesso</Text>
+
+      <Text
+        style={[
+          // styles.description,
+          {
+            textAlign: "center",
+            backgroundColor: "rgba(4, 38, 176, 0.3)",
+            marginBottom: 15,
+            // marginTop: 5,
+            marginLeft: 20,
+            marginRight: 20,
+            fontSize: 4,
+          },
+        ]}
+      ></Text>
+      <TextInput
+        style={styles.input}
+        value={cpf}
+        onChangeText={setCpf}
+        keyboardType="number-pad"
+        maxLength={11}
+        autoCorrect={false}
+        placeholder="Digite o seu CPF"
+      />
+      <TextInput
+        style={styles.input}
+        value={senha}
+        onChangeText={setSenha}
+        autoCorrect={false}
+        placeholder="Digite uma nova senha"
+      />
       <BaseButton style={styles.button} onPress={handleRecuperar}>
-        <Text style={styles.buttonText}>
-          Confirmar
-        </Text>
+        <Text style={styles.buttonText}>Confirmar</Text>
       </BaseButton>
       <BaseButton style={styles.button} onPress={handleNavigateToHome}>
-        <Text style={styles.buttonText}>
-          Cancelar
-        </Text>
+        <Text style={styles.buttonText}>Cancelar</Text>
       </BaseButton>
     </View>
   );
